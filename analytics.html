@@ -24,7 +24,7 @@
                 <a href="control.html" class="nav-link">Контроль</a>
             </nav>
             <div class="user-menu">
-                <span class="user-name">Иванов А.В.<br/>(Администратор)</span>
+                <span class="user-name">Иванов А.В.<br />(Администратор)</span>
                 <button class="logout-btn">Выйти</button>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="analytics-tabs">
                 <button class="tab-button active" data-tab="#">Конструктор</button>
                 <button class="tab-button" data-tab="#">Сводка по подразделениям</button>
-                <button class="tab-button" data-tab="#">Шаблоны</button>              
+                <button class="tab-button" data-tab="#">Шаблоны</button>
             </div>
 
             <div class="analytics-layout">
@@ -48,7 +48,23 @@
                     <h2>Конструктор отчета</h2>
 
                     <div class="builder-step">
-                        <h3>Шаг 1: Выбор проектов</h3>
+                        <h3>Шаг 1: Загрузка шаблона</h3>
+                        <div class="saved-reports-container">
+                            <div class="form-group">
+                                <label for="chartType">Выберите сохраненный шаблон для загрузки</label>
+                                <select id="chartType">
+                                    <option value="line">Выберите шаблон</option>
+                                </select>
+                            </div>
+
+                            <div class="saved-reports-actions">
+                                <button class="btn-primary" id="loadReportBtn">Загрузить шаблон</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>Шаг 2: Выбор проектов</h3>
                         <div class="filters">
                             <select id="filterDirection">
                                 <option value="">Все направления</option>
@@ -66,13 +82,15 @@
                                 <input type="number" id="filterRankMin" placeholder="Ранг от">
                                 <input type="number" id="filterRankMax" placeholder="Ранг до">
                             </div>
-                            <button class="btn-primary" id="applyFilters">Применить фильтры</button>
+                            <div class="saved-filters-container">
+                                <button class="btn-primary" id="applyFilters">Применить фильтры</button>
+                            </div>
                         </div>
                         <div class="selected-count">Выбрано проектов: <span id="projectsCount">3</span></div>
                     </div>
 
                     <div class="builder-step">
-                        <h3>Шаг 2: Выбор данных для таблицы</h3>
+                        <h3>Шаг 3: Выбор данных для таблицы</h3>
                         <div class="data-selection">
                             <label class="checkbox-label">
                                 <input type="checkbox" name="dataField" value="name" checked>
@@ -107,70 +125,11 @@
                         </div>
                     </div>
 
-                    <div class="builder-step">
-                        <h3>Шаг 3: Настройка графика</h3>
-                        <div class="chart-settings">
-                            <div class="form-group">
-                                <label for="chartType">Тип графика</label>
-                                <select id="chartType">
-                                    <option value="line">Линейный</option>
-                                    <option value="bar">Столбчатый</option>
-                                    <option value="pie">Круговой</option>
-                                    <option value="scatter">Точечная диаграмма</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="xAxis">Ось X</label>
-                                <select id="xAxis">
-                                    <option value="name">Название проекта</option>
-                                    <option value="direction">Направление</option>
-                                    <option value="department">Подразделение</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="yAxis">Ось Y</label>
-                                <select id="yAxis">
-                                    <option value="npv">NPV</option>
-                                    <option value="irr">IRR</option>
-                                    <option value="rank">Ранг</option>
-                                    <option value="payback">Срок окупаемости</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="groupBy">Группировка</label>
-                                <select id="groupBy">
-                                    <option value="">Нет</option>
-                                    <option value="direction">По направлениям</option>
-                                    <option value="department">По подразделениям</option>
-                                </select>
-                            </div>
-                        </div>
+                    <div class="saved-templates-container">
+                        <button class="btn-secondary" id="saveAsTemplateBtn"> Сохранить шаблон</button>
+                        <button class="btn-secondary" id="saveAsTemplateBtn">Изменить шаблон</button>
                     </div>
-
-                    <div class="builder-step">
-                        <h3>Шаг 4: Сохраненные шаблоны</h3>
-                        <div class="saved-reports-container">
-                            <div class="form-group">
-                                <label for="chartType">Выберите сохраненный шаблон для загрузки</label>
-                                <select id="chartType">
-                                    <option value="line">Выберите шаблон</option>
-                                </select>
-                            </div>
-
-                            <div class="saved-reports-actions">
-                                <button class="btn-primary" id="loadReportBtn">Загрузить шаблон</button>
-                                <button class="btn-primary" id="deleteReportBtn">Удалить шаблон</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn-secondary" id="saveAsTemplateBtn">
-                        <span class="btn-icon">📋</span> Сохранить как шаблон
-                    </button>
-
-                    <button class="btn-primary" id="saveReport">
-                        <span class="btn-icon">💾</span> Сохранить отчет
-                    </button>
+                    
 
                 </div>
 

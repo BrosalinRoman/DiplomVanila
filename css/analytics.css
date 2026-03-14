@@ -42,6 +42,12 @@
     font-size: 1.1rem;
 }
 
+.saved-templates-container{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);  /* Позволяет колонкам сжиматься меньше контента */
+    gap: 0.5rem;
+}
+
 .filters {
     display: flex;
     flex-direction: column;
@@ -58,7 +64,7 @@
 
 .range-filters {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);  /* Позволяет колонкам сжиматься меньше контента */
     gap: 0.5rem;
 }
 
