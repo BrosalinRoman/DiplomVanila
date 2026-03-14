@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инвестиционные проекты - Управление инвестиционными проектами</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/projects.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="home.html" class="logo-link">
+                <img src="images/logo.png" alt="Логотип системы" class="logo">
+                <span class="system-name">Система управления инвестиционными проектами</span>
+            </a>
+            <nav class="main-nav">
+                <a href="home.html" class="nav-link">Главная</a>
+                <a href="nsi.html" class="nav-link">НСИ</a>
+                <a href="projects.html" class="nav-link active">Инвестпроекты</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="control.html" class="nav-link">Контроль</a>
+            </nav>
+            <div class="user-menu">
+                <span class="user-name">Иванов А.В.<br/>(Администратор)</span>
+                <button class="logout-btn">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="projects-container">
+            <div class="page-header">
+                <h1>Инвестиционные проекты</h1>
+                <button class="btn-primary" id="createProjectBtn">+ Создать проект</button>
+            </div>
+            <!--Подумать над перемещением кнопки, так как она д б только в текущих проектах-->
+
+
+            <!--Посмотреть как реализован переход по страницам и сделать страницы-->
+            <div class="teo-tabs">
+                <button class="tab-button active" data-tab="#">Текущие проекты</button>
+                <button class="tab-button" data-tab="#">Черновики</button>
+                <button class="tab-button" data-tab="#">Архив проектов</button>
+            </div>
+
+            <div class="projects-controls">
+                <div class="search-box">
+                    <input type="text" id="projectSearch" placeholder="Поиск по названию проекта...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <div class="filters">
+                    <select id="directionFilter">
+                        <option value="">Все направления</option>
+                        <option value="IT">IT</option>
+                        <option value="Производство">Производство</option>
+                        <option value="Логистика">Логистика</option>
+                    </select>
+                    <select id="departmentFilter">
+                        <option value="">Все подразделения</option>
+                        <option value="Департамент развития">Департамент развития</option>
+                        <option value="Филиал Восток">Филиал Восток</option>
+                        <option value="Центральный офис">Центральный офис</option>
+                    </select>
+                    <select id="sortSelect">
+                        <option value="rank-desc">Ранг (по убыванию)</option>
+                        <option value="rank-asc">Ранг (по возрастанию)</option>
+                        <option value="date">Дата создания</option>
+                        <option value="name">Название (А-Я)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="projects-list">
+                <table class="projects-table">
+                    <thead>
+                        <tr>
+                            <th>Название проекта</th>
+                            <th>Ранг</th>
+                            <th>Направление</th>
+                            <th>Структурное подразделение</th>
+                            <th>Статус</th>
+                            <th>Дата изменения</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="project-row" data-project-id="1">
+                            <td class="project-name">Развитие IT-инфраструктуры</td>
+                            <td class="project-rank">85</td>
+                            <td class="project-direction">IT</td>
+                            <td class="project-department">Департамент развития</td>
+                            <td class="project-status"><span class="status-badge status-active">Активный</span></td>
+                            <td class="project-date">2024-01-20</td>
+                        </tr>
+                        <tr class="project-row" data-project-id="2">
+                            <td class="project-name">Строительство цеха №2</td>
+                            <td class="project-rank">78</td>
+                            <td class="project-direction">Производство</td>
+                            <td class="project-department">Филиал Восток</td>
+                            <td class="project-status"><span class="status-badge status-active">Активный</span></td>
+                            <td class="project-date">2024-01-18</td>
+                        </tr>
+                        <tr class="project-row" data-project-id="3">
+                            <td class="project-name">Закупка оборудования</td>
+                            <td class="project-rank">92</td>
+                            <td class="project-direction">Логистика</td>
+                            <td class="project-department">Центральный офис</td>
+                            <td class="project-status"><span class="status-badge status-completed">Завершен</span></td>
+                            <td class="project-date">2024-01-15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Система управления инвестиционными проектами</p>
+            <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
+        </div>
+    </footer>
+    <script src="js/projects.js"></script>
+</body>
+
+</html>

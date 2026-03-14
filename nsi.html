@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>НСИ - Управление инвестиционными проектами</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/nsi.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="home.html" class="logo-link">
+                <img src="images/logo.png" alt="Логотип системы" class="logo">
+                <span class="system-name">Система управления инвестиционными проектами</span>
+            </a>
+            <nav class="main-nav">
+                <a href="home.html" class="nav-link">Главная</a>
+                <a href="nsi.html" class="nav-link active">НСИ</a>
+                <a href="projects.html" class="nav-link">Инвестпроекты</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="control.html" class="nav-link">Контроль</a>
+            </nav>
+            <div class="user-menu">
+                <span class="user-name">Иванов А.В.<br/>(Администратор)</span>
+                <button class="logout-btn">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="nsi-container">
+            <div class="page-header">
+                <h1>Нормативно-Справочная Информация</h1>
+            </div>
+
+            <!--Посмотреть как реализован переход по страницам и сделать страницы-->
+            <div class="nsi-tabs">
+                <button class="tab-button active" data-tab="formuls">Формулы</button>
+                <button class="tab-button" data-tab="directions">Направления</button>
+                <button class="tab-button" data-tab="statuses">Статусы</button>
+                <button class="tab-button" data-tab="ranges">Диапозоны характеристик</button>
+                <button class="tab-button" data-tab="divisions">Подразделения</button>
+                <button class="tab-button" data-tab="users">Пользователи</button>
+            </div>
+
+            <!-- Вкладка Формулы -->
+            <div id="formuls" class="tab-pane active">
+                <div class="tab-pane-header">
+                    <h2>Формулы</h2>                    
+                </div>
+
+                <div class="nsi-layout">
+                    <div class="nsi-column">
+                        <div class="section-card">
+                            <h2>Общие формулы (только для просмотра)</h2>
+                            <div class="formulas-tree">
+                                <div class="tree-category">
+                                    <div class="category-header">
+                                        <span class="category-icon">📈</span>
+                                        <h3>Финансы</h3>
+                                    </div>
+                                    <div class="formulas-list">
+                                        <div class="formula-item">
+                                            <div class="formula-header">
+                                                <h4>NPV (Чистая приведенная стоимость)</h4>
+                                            </div>
+                                            <div class="formula-content">
+                                                <div class="formula-expression">
+                                                    NPV = ∑(Ct / (1 + r)^t) - C₀
+                                                </div>
+                                                <div class="formula-description">
+                                                    <p><strong>Описание:</strong> Показывает разницу между текущей
+                                                        стоимостью денежных поступлений и текущей стоимостью денежных
+                                                        выплат.</p>
+                                                    <p><strong>Где:</strong> Ct - денежный поток в период t, r - ставка
+                                                        дисконтирования, C₀ - первоначальные инвестиции</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="formula-item">
+                                            <div class="formula-header">
+                                                <h4>IRR (Внутренняя норма доходности)</h4>
+                                            </div>
+                                            <div class="formula-content">
+                                                <div class="formula-expression">
+                                                    NPV = 0 = ∑(Ct / (1 + IRR)^t) - C₀
+                                                </div>
+                                                <div class="formula-description">
+                                                    <p><strong>Описание:</strong> Ставка дисконтирования, при которой чистая
+                                                        приведенная стоимость равна нулю.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tree-category">
+                                    <div class="category-header">
+                                        <span class="category-icon">🏭</span>
+                                        <h3>Производство</h3>
+                                    </div>
+                                    <div class="formulas-list">
+                                        <div class="formula-item">
+                                            <div class="formula-header">
+                                                <h4>Расчет себестоимости</h4>
+                                            </div>
+                                            <div class="formula-content">
+                                                <div class="formula-expression">
+                                                    Себестоимость = Прямые затраты + Косвенные затраты
+                                                </div>
+                                                <div class="formula-description">
+                                                    <p><strong>Описание:</strong> Расчет полной себестоимости продукции.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nsi-column">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h2>Мои расчеты для ТЭО</h2>
+                                <button class="btn-primary" id="addCalculationBtn">+ Добавить расчет</button>
+                            </div>
+                            <div class="calculations-list">
+                                <div class="calculation-item">
+                                    <div class="calculation-info">
+                                        <h3>ROI проекта A</h3>
+                                        <span class="calculation-date">Создан: 2024-01-15</span>
+                                    </div>
+                                    <div class="calculation-actions">
+                                        <button class="btn-edit">Изменить</button>
+                                        <button class="btn-delete">Удалить</button>
+                                        <button class="btn-copy">Копировать</button>
+                                    </div>
+                                </div>
+                                <div class="calculation-item">
+                                    <div class="calculation-info">
+                                        <h3>Расчет окупаемости</h3>
+                                        <span class="calculation-date">Создан: 2024-01-10</span>
+                                    </div>
+                                    <div class="calculation-actions">
+                                        <button class="btn-edit">Изменить</button>
+                                        <button class="btn-delete">Удалить</button>
+                                        <button class="btn-copy">Копировать</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Направления -->
+            <div id="directions" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Направления</h2>                    
+                </div>
+            </div>
+
+            <!-- Вкладка Статусы -->
+            <div id="statuses" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Статусы</h2>                    
+                </div>
+            </div>
+
+            <!-- Вкладка Диапазоны характеристик -->
+            <div id="ranges" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Диапазоны характеристик</h2>                    
+                </div>
+            </div>
+
+            <!-- Вкладка Подразделения -->
+            <div id="divisions" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Подразделения</h2>                    
+                </div>
+            </div>
+
+            <!-- Вкладка Пользователи -->
+            <div id="users" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Пользователи</h2>                    
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Система управления инвестиционными проектами</p>
+            <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
+        </div>
+    </footer>
+
+    <script src="js/nsi.js"></script>
+</body>
+
+</html>
