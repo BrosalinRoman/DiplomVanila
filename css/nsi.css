@@ -49,7 +49,6 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Стили для вкладки ТЭО */
 .tab-pane-header {
     display: flex;
     justify-content: space-between;

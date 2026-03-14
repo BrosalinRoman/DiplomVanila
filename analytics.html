@@ -36,150 +36,168 @@
                 <h1>Аналитика</h1>
             </div>
 
-            <!--Посмотреть как реализован переход по страницам и сделать страницы, подумать нужен ли здесь контроль-->
             <div class="analytics-tabs">
-                <button class="tab-button active" data-tab="#">Конструктор</button>
-                <button class="tab-button" data-tab="#">Сводка по подразделениям</button>
-                <button class="tab-button" data-tab="#">Шаблоны</button>
+                <button class="tab-button active" data-tab="constructor">Конструктор</button>
+                <button class="tab-button" data-tab="summary">Сводка по подразделениям</button>
+                <button class="tab-button" data-tab="templates">Шаблоны</button>
             </div>
 
-            <div class="analytics-layout">
-                <div class="report-builder">
-                    <h2>Конструктор отчета</h2>
+            <!-- Вкладка Конструктор -->
+            <div id="constructor" class="tab-pane active">
 
-                    <div class="builder-step">
-                        <h3>Шаг 1: Загрузка шаблона</h3>
-                        <div class="saved-reports-container">
-                            <div class="form-group">
-                                <label for="chartType">Выберите сохраненный шаблон для загрузки</label>
-                                <select id="chartType">
-                                    <option value="line">Выберите шаблон</option>
+                <div class="analytics-layout">
+                    <div class="report-builder">
+                        <h2>Конструктор таблицы</h2>
+
+                        <div class="builder-step">
+                            <h3>Шаг 1: Загрузка шаблона</h3>
+                            <div class="saved-reports-container">
+                                <div class="form-group">
+                                    <label for="chartType">Выберите сохраненный шаблон для загрузки</label>
+                                    <select id="chartType">
+                                        <option value="line">Выберите шаблон</option>
+                                    </select>
+                                </div>
+
+                                <div class="saved-reports-actions">
+                                    <button class="btn-primary" id="loadReportBtn">Загрузить шаблон</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="builder-step">
+                            <h3>Шаг 2: Выбор проектов</h3>
+                            <div class="filters">
+                                <select id="filterDirection">
+                                    <option value="">Все направления</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Производство">Производство</option>
+                                    <option value="Логистика">Логистика</option>
                                 </select>
+                                <select id="filterDepartment">
+                                    <option value="">Все подразделения</option>
+                                    <option value="Департамент развития">Департамент развития</option>
+                                    <option value="Филиал Восток">Филиал Восток</option>
+                                    <option value="Центральный офис">Центральный офис</option>
+                                </select>
+                                <div class="range-filters">
+                                    <input type="number" id="filterRankMin" placeholder="Ранг от">
+                                    <input type="number" id="filterRankMax" placeholder="Ранг до">
+                                </div>
+                                <div class="saved-filters-container">
+                                    <button class="btn-primary" id="applyFilters">Применить фильтры</button>
+                                </div>
                             </div>
-
-                            <div class="saved-reports-actions">
-                                <button class="btn-primary" id="loadReportBtn">Загрузить шаблон</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="builder-step">
-                        <h3>Шаг 2: Выбор проектов</h3>
-                        <div class="filters">
-                            <select id="filterDirection">
-                                <option value="">Все направления</option>
-                                <option value="IT">IT</option>
-                                <option value="Производство">Производство</option>
-                                <option value="Логистика">Логистика</option>
-                            </select>
-                            <select id="filterDepartment">
-                                <option value="">Все подразделения</option>
-                                <option value="Департамент развития">Департамент развития</option>
-                                <option value="Филиал Восток">Филиал Восток</option>
-                                <option value="Центральный офис">Центральный офис</option>
-                            </select>
-                            <div class="range-filters">
-                                <input type="number" id="filterRankMin" placeholder="Ранг от">
-                                <input type="number" id="filterRankMax" placeholder="Ранг до">
-                            </div>
-                            <div class="saved-filters-container">
-                                <button class="btn-primary" id="applyFilters">Применить фильтры</button>
-                            </div>
-                        </div>
-                        <div class="selected-count">Выбрано проектов: <span id="projectsCount">3</span></div>
-                    </div>
-
-                    <div class="builder-step">
-                        <h3>Шаг 3: Выбор данных для таблицы</h3>
-                        <div class="data-selection">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="name" checked>
-                                <span class="checkmark"></span>
-                                Название проекта
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="npv" checked>
-                                <span class="checkmark"></span>
-                                NPV
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="irr" checked>
-                                <span class="checkmark"></span>
-                                IRR
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="payback">
-                                <span class="checkmark"></span>
-                                Срок окупаемости
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="direction">
-                                <span class="checkmark"></span>
-                                Направление
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="dataField" value="rank">
-                                <span class="checkmark"></span>
-                                Ранг
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="saved-templates-container">
-                        <button class="btn-secondary" id="saveAsTemplateBtn"> Сохранить шаблон</button>
-                        <button class="btn-secondary" id="saveAsTemplateBtn">Изменить шаблон</button>
-                    </div>
-                    
-
-                </div>
-
-                <div class="report-viewer">
-                    <div class="viewer-tabs">
-                        <button class="viewer-tab active" data-tab="table">Таблица</button>
-                        <button class="viewer-tab" data-tab="chart">График</button>
-                    </div>
-
-                    <div class="viewer-content">
-                        <div id="tableTab" class="viewer-pane active">
-                            <div class="table-container">
-                                <table id="reportTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Название проекта</th>
-                                            <th>NPV</th>
-                                            <th>IRR</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Развитие IT-инфраструктуры</td>
-                                            <td>15 800 000</td>
-                                            <td>18.5%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Строительство цеха №2</td>
-                                            <td>12 500 000</td>
-                                            <td>15.2%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Закупка оборудования</td>
-                                            <td>9 200 000</td>
-                                            <td>12.8%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button class="btn-secondary" id="exportExcel">Экспорт в Excel</button>
+                            <div class="selected-count">Выбрано проектов: <span id="projectsCount">3</span></div>
                         </div>
 
-                        <div id="chartTab" class="viewer-pane">
-                            <div class="chart-container">
-                                <canvas id="reportChart"></canvas>
+                        <div class="builder-step">
+                            <h3>Шаг 3: Выбор данных для таблицы</h3>
+                            <div class="data-selection">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="name" checked>
+                                    <span class="checkmark"></span>
+                                    Название проекта
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="npv" checked>
+                                    <span class="checkmark"></span>
+                                    NPV
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="irr" checked>
+                                    <span class="checkmark"></span>
+                                    IRR
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="payback">
+                                    <span class="checkmark"></span>
+                                    Срок окупаемости
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="direction">
+                                    <span class="checkmark"></span>
+                                    Направление
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="dataField" value="rank">
+                                    <span class="checkmark"></span>
+                                    Ранг
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="saved-templates-container">
+                            <button class="btn-secondary" id="saveAsTemplateBtn"> Сохранить шаблон</button>
+                            <button class="btn-secondary" id="saveAsTemplateBtn">Изменить шаблон</button>
+                        </div>
+
+
+                    </div>
+
+                    <div class="report-viewer">
+                        <div class="viewer-tabs">
+                            <button class="viewer-tab active" data-tab="table">Таблица</button>
+                            <button class="viewer-tab" data-tab="chart">График</button>
+                        </div>
+
+                        <div class="viewer-content">
+                            <div id="tableTab" class="viewer-pane active">
+                                <div class="table-container">
+                                    <table id="reportTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Название проекта</th>
+                                                <th>NPV</th>
+                                                <th>IRR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Развитие IT-инфраструктуры</td>
+                                                <td>15 800 000</td>
+                                                <td>18.5%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Строительство цеха №2</td>
+                                                <td>12 500 000</td>
+                                                <td>15.2%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Закупка оборудования</td>
+                                                <td>9 200 000</td>
+                                                <td>12.8%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="btn-secondary" id="exportExcel">Экспорт в Excel</button>
+                            </div>
+
+                            <div id="chartTab" class="viewer-pane">
+                                <div class="chart-container">
+                                    <canvas id="reportChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Вкладка Сводка по подразделениям -->
+            <div id="summary" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Сводка по подразделениям</h2>
+                </div>
+            </div>
+
+            <!-- Вкладка Шаблоны -->
+            <div id="templates" class="tab-pane">
+                <div class="tab-pane-header">
+                    <h2>Шаблоны</h2>
+                </div>
+            </div>
+
         </div>
     </main>
 

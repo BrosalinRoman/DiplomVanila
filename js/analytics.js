@@ -8,9 +8,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Инициализация Chart.js
     let reportChart = null;
+
+    // Переключение вкладок
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const tabId = this.getAttribute('data-tab');
+
+            // Убираем активный класс у всех кнопок и панелей
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Добавляем активный класс к текущей кнопке и панели
+            this.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+        });
+    });
     
     // Переключение вкладок в просмотре отчета
     const viewerTabs = document.querySelectorAll('.viewer-tab');
