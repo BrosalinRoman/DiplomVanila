@@ -3,6 +3,52 @@
     margin: 0 auto;
 }
 
+.teo-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    overflow: hidden;
+}
+
+.tab-button {
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--dark-gray);
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    color: var(--secondary-color);
+    background: var(--light-gray);
+}
+
+.tab-button.active {
+    color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+    background: white;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .projects-controls {
     display: flex;
     gap: 1.5rem;
@@ -138,36 +184,4 @@
     .projects-table td {
         padding: 0.5rem;
     }
-}
-
-.teo-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 2rem;
-    background: white;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-    overflow: hidden;
-}
-
-.tab-button {
-    padding: 1rem 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--dark-gray);
-    transition: var(--transition);
-    border-bottom: 3px solid transparent;
-}
-
-.tab-button:hover {
-    color: var(--secondary-color);
-    background: var(--light-gray);
-}
-
-.tab-button.active {
-    color: var(--secondary-color);
-    border-bottom-color: var(--secondary-color);
-    background: white;
 }
