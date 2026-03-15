@@ -207,10 +207,153 @@
                 </div>
             </div>
 
-            <!-- Вкладка Сводка по подразделениям (заглушка) -->
+            <!-- Вкладка Сводка по подразделениям -->
             <div id="summary" class="tab-pane">
-                <div class="tab-pane-header">
-                    <h2>Сводка по подразделениям</h2>
+                <div class="analytics-layout">
+                    <!-- Левая панель: фильтры -->
+                    <div class="report-builder">
+                        <h2>Фильтры</h2>
+
+                        <!-- Подразделения -->
+                        <div class="filter-group">
+                            <span>Подразделения</span>
+                            <div class="dropdown-checkbox" id="summaryDepartmentDropdown">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все подразделения</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Департамент развития" checked>
+                                        <span class="checkmark"></span>Департамент развития
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Филиал Восток" checked>
+                                        <span class="checkmark"></span>Филиал Восток
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Центральный офис" checked>
+                                        <span class="checkmark"></span>Центральный офис
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Дата от – до -->
+                        <div class="filter-group">
+                            <span>Дата</span>
+                            <div class="range-filters">
+                                <input type="date" id="summaryDateFrom" placeholder="от">
+                                <input type="date" id="summaryDateTo" placeholder="до">
+                            </div>
+                        </div>
+
+                        <!-- Статус -->
+                        <div class="filter-group">
+                            <span>Статус</span>
+                            <div class="dropdown-checkbox" id="summaryStatusDropdown">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все статусы</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Активен" checked>
+                                        <span class="checkmark"></span>Активен
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="На паузе" checked>
+                                        <span class="checkmark"></span>На паузе
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Завершен" checked>
+                                        <span class="checkmark"></span>Завершен
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Направление -->
+                        <div class="filter-group">
+                            <span>Направление</span>
+                            <div class="dropdown-checkbox" id="summaryDirectionDropdown">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все направления</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="IT" checked>
+                                        <span class="checkmark"></span>IT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Производство" checked>
+                                        <span class="checkmark"></span>Производство
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Логистика" checked>
+                                        <span class="checkmark"></span>Логистика
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Категория -->
+                        <div class="filter-group">
+                            <span>Категория</span>
+                            <div class="dropdown-checkbox" id="summaryCategoryDropdown">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все категории</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="IT" checked>
+                                        <span class="checkmark"></span>IT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Производство" checked>
+                                        <span class="checkmark"></span>Производство
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Логистика" checked>
+                                        <span class="checkmark"></span>Логистика
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="saved-filters-container">
+                            <button class="btn-primary" id="applySummaryFilters">Применить фильтры</button>
+                        </div>
+                    </div>
+
+                    <!-- Правая панель: таблица и график -->
+                    <div class="report-viewer">
+                        <div class="viewer-tabs">
+                            <button class="viewer-tab active" data-tab="summaryTable">Таблица</button>
+                            <button class="viewer-tab" data-tab="summaryChart">График</button>
+                        </div>
+
+                        <div class="viewer-content">
+                            <div id="summaryTableTab" class="viewer-pane active">
+                                <div class="table-container">
+                                    <table id="summaryTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Наименование подразделения</th>
+                                                <th>Количество проектов</th>
+                                                <th>Запрашиваемая сумма</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Всего</th>
+                                                <th id="totalProjects">0</th>
+                                                <th id="totalBudget">0</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <button class="btn-secondary" id="exportSummaryExcel">Экспорт в Excel</button>
+                            </div>
+
+                            <div id="summaryChartTab" class="viewer-pane">
+                                <div class="chart-container">
+                                    <canvas id="summaryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
