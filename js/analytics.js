@@ -519,4 +519,202 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('Экспорт в Excel будет реализован в следующей версии', 'info');
         });
     }
+
+        // ==================== ШАБЛОНЫ ====================
+    let templates = []; // массив шаблонов: { id, name, date, settings }
+
+    // Элементы
+    const templateSearch = document.getElementById('templateSearch');
+    const templatesList = document.getElementById('templatesList');
+    const saveTemplateBtn = document.getElementById('saveAsTemplateBtn');
+    const editTemplateBtn = document.getElementById('editTemplateBtn');
+
+    // Вспомогательная функция для сбора текущих настроек
+    function getCurrentSettings() {
+        const category = categorySelect.value;
+        const directions = Array.from(directionDropdown.querySelectorAll('.dropdown-menu input:checked')).map(cb => cb.value);
+        const departments = Array.from(departmentDropdown.querySelectorAll('.dropdown-menu input:checked')).map(cb => cb.value);
+        const statuses = Array.from(statusDropdown.querySelectorAll('.dropdown-menu input:checked')).map(cb => cb.value);
+        const rankMin = document.getElementById('filterRankMin').value;
+        const rankMax = document.getElementById('filterRankMax').value;
+        const selectedFields = Array.from(document.querySelectorAll('input[name="dataField"]:checked')).map(cb => cb.value);
+
+        return {
+            category,
+            directions,
+            departments,
+            statuses,
+            rankMin,
+            rankMax,
+            selectedFields
+        };
+    }
+
+    // Применить настройки шаблона к элементам
+    function applyTemplateSettings(settings) {
+        // Категория
+        categorySelect.value = settings.category;
+        currentCategory = settings.category;
+        renderDataFields(); // обновить доступные поля
+
+        // Направления
+        directionDropdown.querySelectorAll('.dropdown-menu input').forEach(cb => {
+            cb.checked = settings.directions.includes(cb.value);
+        });
+        updateDropdownButton(directionDropdown);
+
+        // Подразделения
+        departmentDropdown.querySelectorAll('.dropdown-menu input').forEach(cb => {
+            cb.checked = settings.departments.includes(cb.value);
+        });
+        updateDropdownButton(departmentDropdown);
+
+        // Статусы
+        statusDropdown.querySelectorAll('.dropdown-menu input').forEach(cb => {
+            cb.checked = settings.statuses.includes(cb.value);
+        });
+        updateDropdownButton(statusDropdown);
+
+        // Ранги
+        document.getElementById('filterRankMin').value = settings.rankMin || '';
+        document.getElementById('filterRankMax').value = settings.rankMax || '';
+
+        // Показатели
+        document.querySelectorAll('input[name="dataField"]').forEach(cb => {
+            cb.checked = settings.selectedFields.includes(cb.value);
+        });
+
+        // Применить фильтры и обновить таблицу
+        applyFilters();
+    }
+
+    // Сохранить шаблон
+    function saveTemplate() {
+        const name = prompt('Введите название шаблона:');
+        if (!name) return;
+
+        const settings = getCurrentSettings();
+        const newTemplate = {
+            id: Date.now(),
+            name: name,
+            date: new Date().toLocaleDateString('ru-RU'),
+            settings: settings
+        };
+        templates.push(newTemplate);
+        renderTemplates();
+        showNotification(`Шаблон "${name}" сохранён`, 'success');
+    }
+
+    // Удалить шаблон
+    function deleteTemplate(id, event) {
+        event.stopPropagation(); // чтобы не сработал клик на элементе
+        if (confirm('Удалить шаблон?')) {
+            templates = templates.filter(t => t.id !== id);
+            renderTemplates();
+            showNotification('Шаблон удалён', 'info');
+        }
+    }
+
+    // Применить шаблон (переключить вкладку и установить фильтры)
+    function applyTemplate(template) {
+        // Переключиться на вкладку анализа
+        document.querySelector('.tab-button[data-tab="analysis"]').click();
+        // Применить настройки
+        applyTemplateSettings(template.settings);
+        showNotification(`Применён шаблон "${template.name}"`, 'success');
+    }
+
+    // Отрисовать список шаблонов
+    function renderTemplates() {
+        const searchTerm = templateSearch.value.toLowerCase();
+        const filtered = templates.filter(t => t.name.toLowerCase().includes(searchTerm));
+
+        if (filtered.length === 0) {
+            templatesList.innerHTML = '<p class="text-center">Нет сохранённых шаблонов</p>';
+            return;
+        }
+
+        let html = '';
+        filtered.forEach(t => {
+            html += `
+                <div class="template-item" data-id="${t.id}">
+                    <div class="template-info">
+                        <span class="template-name">${t.name}</span>
+                        <span class="template-date">${t.date}</span>
+                    </div>
+                    <button class="delete-template-btn" title="Удалить шаблон">🗑️ Удалить</button>
+                </div>
+            `;
+        });
+        templatesList.innerHTML = html;
+
+        // Обработчики на элементах
+        document.querySelectorAll('.template-item').forEach(item => {
+            const id = Number(item.dataset.id);
+            // Клик по элементу (кроме кнопки удаления)
+            item.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-template-btn')) return;
+                const template = templates.find(t => t.id === id);
+                if (template) applyTemplate(template);
+            });
+
+            // Кнопка удаления
+            const deleteBtn = item.querySelector('.delete-template-btn');
+            deleteBtn.addEventListener('click', (e) => deleteTemplate(id, e));
+        });
+    }
+
+    // Поиск по шаблонам
+    templateSearch.addEventListener('input', renderTemplates);
+
+    // Кнопки сохранения и изменения
+    if (saveTemplateBtn) {
+        saveTemplateBtn.addEventListener('click', saveTemplate);
+    }
+
+    if (editTemplateBtn) {
+        editTemplateBtn.addEventListener('click', () => {
+            // Для упрощения пока просто сохраняем как новый
+            saveTemplate();
+        });
+    }
+
+    // Инициализация (можно добавить пару демо-шаблонов для теста)
+    function initTemplates() {
+        // Примеры
+        templates = [
+            {
+                id: 1,
+                name: 'IT проекты',
+                date: '15.03.2026',
+                settings: {
+                    category: 'IT',
+                    directions: ['IT'],
+                    departments: ['Департамент развития'],
+                    statuses: ['Активен'],
+                    rankMin: '',
+                    rankMax: '',
+                    selectedFields: ['name', 'npv', 'irr', 'payback']
+                }
+            },
+            {
+                id: 2,
+                name: 'Производство',
+                date: '14.03.2026',
+                settings: {
+                    category: 'Производство',
+                    directions: ['Производство'],
+                    departments: ['Филиал Восток', 'Центральный офис'],
+                    statuses: ['Активен', 'На паузе'],
+                    rankMin: '1',
+                    rankMax: '5',
+                    selectedFields: ['name', 'npv', 'irr', 'rank']
+                }
+            }
+        ];
+        renderTemplates();
+    }
+
+    // Вызовем инициализацию
+    initTemplates();
 });

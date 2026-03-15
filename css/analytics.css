@@ -596,3 +596,94 @@
     padding: 1rem;
     border-bottom: 1px solid var(--border-color);
 }
+
+/* ===== Шаблоны ===== */
+.templates-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.search-box {
+    margin-bottom: 1.5rem;
+}
+
+#templateSearch {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+#templateSearch:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.templates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.template-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--light-gray);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.template-item:hover {
+    background-color: var(--medium-gray);
+    border-color: var(--dark-gray);
+}
+
+.template-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.template-name {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.template-date {
+    font-size: 0.85rem;
+    color: var(--dark-gray);
+}
+
+.delete-template-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.delete-template-btn:hover {
+    background-color: #c0392b; /* темнее */
+    transform: scale(1.05);
+}
+
+.delete-template-btn:active {
+    transform: scale(0.95);
+}
