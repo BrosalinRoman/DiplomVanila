@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // ------------------------------ ДАННЫЕ ------------------------------
     const projects = [
         { id: 1, name: 'Развитие IT-инфраструктуры', rank: 1, direction: 'IT', department: 'Департамент развития', status: 'Активен', category: 'IT', npv: 15800000, irr: 18.5, payback: 2.5 },
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ------------------------------ ФИЛЬТРАЦИЯ (анализ) ------------------------------
-    function applyFilters() {
+    function applyFilters(showNotify = true) {
         currentCategory = categorySelect.value;
         const selectedDirections = Array.from(directionDropdown.querySelectorAll('.dropdown-menu input:checked')).map(cb => cb.value);
         const selectedDepartments = Array.from(departmentDropdown.querySelectorAll('.dropdown-menu input:checked')).map(cb => cb.value);
@@ -239,7 +239,9 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedProjectIds = filteredProjects.map(p => p.id);
         updateProjectsCount();
         updateTable();
-        showNotification(`Применены фильтры. Найдено проектов: ${filteredProjects.length}`, 'success');
+        if (showNotify) {
+            showNotification(`Применены фильтры. Найдено проектов: ${filteredProjects.length}`, 'success');
+        }
     }
 
     function updateProjectsCount() {
@@ -260,9 +262,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const checked = selectedProjectIds.includes(p.id) ? 'checked' : '';
             html += `
                 <div class="project-item">
-                    <label>
+                    <label class="checkbox-label">
                         <input type="checkbox" class="project-checkbox" value="${p.id}" ${checked}>
-                        <strong>${p.name}</strong>
+                        <span class="checkmark"></span><strong>${p.name}</strong>
                     </label>
                     <div class="project-info">
                         <span>Ранг: ${p.rank}</span>
@@ -364,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         renderDataFields();
         updateDropdownButtons();
-        applyFilters();
+        applyFilters(false);
     }
     init();
 
@@ -393,11 +395,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (summaryStatusDropdown) updateDropdownButton(summaryStatusDropdown);
             if (summaryDirectionDropdown) updateDropdownButton(summaryDirectionDropdown);
             if (summaryCategoryDropdown) updateDropdownButton(summaryCategoryDropdown);
-        }
-
-        function initSummary() {
-            updateSummaryDropdownButtons();
-            applySummaryFilters();
         }
 
         function getFilteredProjectsForSummary() {
@@ -490,14 +487,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        function applySummaryFilters() {
+        function applySummaryFilters(showNotify = true) {
             updateSummaryTable();
             updateSummaryChart();
-            showNotification(`Применены фильтры`, 'success');
+            if (showNotify) {
+                showNotification(`Применены фильтры`, 'success');
+            }
         }
 
         if (applySummaryFiltersBtn) {
             applySummaryFiltersBtn.addEventListener('click', applySummaryFilters);
+        }
+
+
+        function initSummary() {
+            updateSummaryDropdownButtons();
+            applySummaryFilters(false);
         }
 
         // Инициализация дропдаунов сводки (обработчики уже есть, просто обновим текст)
