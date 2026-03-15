@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </select>
                 </div>
             `;
-        } else if (type === 'direction' || type === 'status' || type === 'division') {
+        } else if (type === 'direction' || type === 'status' || type === 'division' || type === 'category') {
             fieldsHtml = `
                 <div class="form-group">
                     <label for="itemName">Название</label>
@@ -236,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const names = {
             formula: 'формулы',
             direction: 'направления',
+            category: 'категории',
             status: 'статуса',
             range: 'диапазона',
             division: 'подразделения',
@@ -288,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const map = {
             'formuls': 'formula',
             'directions': 'direction',
+            'categories': 'category',
             'statuses': 'status',
             'ranges': 'range',
             'divisions': 'division',
