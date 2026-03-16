@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проект "Развитие IT-инфраструктуры" - Управление инвестиционными проектами</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/project-detail.css">
+    <link rel="stylesheet" href="css/project-control-detail.css">
 </head>
 <body>
     <header class="main-header">
@@ -29,13 +29,16 @@
     </header>
 
     <main class="main-content">
-        <div class="project-detail-container">
+        <div class="project-control-detail-container">
             <div class="project-header">
                 <div class="project-title">
                     <h1>Проект: "Развитие IT-инфраструктуры"</h1>
                     <div class="project-meta">
-                        <span class="project-id">ID: PRJ-001</span>
-                        <span class="project-rank">Ранг: 85</span>
+                        <span>Бюджет: 35000 BYN</span>
+                        <span>Проинвестировано: 25000 BYN</span>
+                        <span>Осталось: 10000 BYN</span>
+                        <span>Затрачено: 22000 BYN</span>
+                        <span>Прогресс: 70%</span>
                     </div>
                 </div>
                 <div class="project-actions">
@@ -45,178 +48,39 @@
             </div>
             
             <div class="project-tabs">
-                <button class="tab-button active" data-tab="teo">ТЭО</button>
-                <button class="tab-button" data-tab="card">Карточка проекта</button>
-                <button class="tab-button" data-tab="ranking">Характеристики ранжирования</button>
-                <button class="tab-button" data-tab="coments">Комментарии</button>
+                <button class="tab-button active" data-tab="invest">Инвестиции</button>
+                <button class="tab-button" data-tab="cost">Затраты</button>
+                <button class="tab-button" data-tab="work-done">Отчет о проделанной работе</button>
+                <button class="tab-button" data-tab="visual">Визуализация</button>
             </div>
             
             <div class="tab-content">
-                <!-- Вкладка ТЭО -->
-                <div id="teo" class="tab-pane active">
-                    <div class="teo-header">
-                        <h2>Технико-экономическое обоснование</h2>
-                        <button class="btn-primary" id="addIndicatorBtn">+ Добавить показатель</button>
-                    </div>
-                    
-                    <div class="teo-sections">
-                        <div class="teo-section">
-                            <h3>📊 Финансовые показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="npv">NPV (Чистая приведенная стоимость), руб.</label>
-                                        <input type="number" id="npv" value="15800000">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="irr">IRR (Внутренняя норма доходности), %</label>
-                                        <input type="number" id="irr" value="18.5" step="0.1">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="paybackPeriod">Срок окупаемости, лет</label>
-                                        <input type="number" id="paybackPeriod" value="3.5" step="0.1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="discountRate">Ставка дисконтирования, %</label>
-                                        <input type="number" id="discountRate" value="12.0" step="0.1">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="teo-section">
-                            <h3>🎯 Маркетинговые показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-group">
-                                    <label for="targetMarket">Целевой рынок</label>
-                                    <input type="text" id="targetMarket" value="Корпоративный сегмент">
-                                </div>
-                                <div class="form-group">
-                                    <label for="marketShare">Планируемая доля рынка, %</label>
-                                    <input type="number" id="marketShare" value="15" step="0.1">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="teo-section">
-                            <h3>🏭 Производственные показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-group">
-                                    <label for="productionCapacity">Производственная мощность, ед./год</label>
-                                    <input type="number" id="productionCapacity" value="1000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="utilizationRate">Коэффициент использования мощностей, %</label>
-                                    <input type="number" id="utilizationRate" value="85" step="0.1">
-                                </div>
-                            </div>
-                        </div>
+                <!-- Вкладка Инвестиции -->
+                <div id="invest" class="tab-pane active">
+                    <div class="tab-header">
+                        <h2>Инвестиции</h2>
                     </div>
                 </div>
                 
-                <!-- Вкладка Карточка проекта -->
-                <div id="card" class="tab-pane">
-                    <h2>📋 Карточка проекта</h2>
-                    <div class="project-card-form">
-                        <div class="form-column">
-                            <div class="form-group">
-                                <label for="projectDescription">Краткое описание</label>
-                                <textarea id="projectDescription" rows="4">Проект направлен на модернизацию IT-инфраструктуры компании с целью повышения производительности и безопасности.</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="projectManager">Менеджер проекта</label>
-                                <input type="text" id="projectManager" value="Петров И.С.">
-                            </div>
-                            <div class="form-group">
-                                <label for="startDate">Дата начала</label>
-                                <input type="date" id="startDate" value="2024-02-01">
-                            </div>
-                            <div class="form-group">
-                                <label for="endDate">Дата окончания (план)</label>
-                                <input type="date" id="endDate" value="2024-12-31">
-                            </div>
-                        </div>
-                        <div class="form-column">
-                            <div class="form-group readonly">
-                                <label for="importedNPV">NPV (из ТЭО)</label>
-                                <input type="text" id="importedNPV" value="15 800 000 руб." readonly>
-                            </div>
-                            <div class="form-group readonly">
-                                <label for="importedIRR">IRR (из ТЭО)</label>
-                                <input type="text" id="importedIRR" value="18.5%" readonly>
-                            </div>
-                            <div class="form-group readonly">
-                                <label for="importedPayback">Срок окупаемости (из ТЭО)</label>
-                                <input type="text" id="importedPayback" value="3.5 лет" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="projectBudget">Бюджет проекта, руб.</label>
-                                <input type="number" id="projectBudget" value="50000000">
-                            </div>
-                        </div>
-                    </div>
+                <!-- Вкладка Затраты -->
+                <div id="cost" class="tab-pane">
+                    <div class="tab-header">
+                        <h2>Затраты</h2>
+                    </div>                   
                 </div>
                 
-                <!-- Вкладка Характеристики ранжирования -->
-                <div id="ranking" class="tab-pane">
-                    <h2>🏆 Характеристики ранжирования</h2>
-                    <p class="ranking-info">Данные для расчета импортируются из раздела ТЭО</p>
-                    
-                    <div class="ranking-table-container">
-                        <table class="ranking-table">
-                            <thead>
-                                <tr>
-                                    <th>Характеристика</th>
-                                    <th>Значение (из ТЭО)</th>
-                                    <th>Диапазон баллов</th>
-                                    <th>Присвоенный балл</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>NPV проекта</td>
-                                    <td>15 800 000 руб.</td>
-                                    <td>>10 млн руб. = 3 балла; 5-10 млн = 2 балла; <5 млн = 1 балл</td>
-                                    <td class="ranking-score">3</td>
-                                </tr>
-                                <tr>
-                                    <td>IRR проекта</td>
-                                    <td>18.5%</td>
-                                    <td>>15% = 3 балла; 10-15% = 2 балла; <10% = 1 балл</td>
-                                    <td class="ranking-score">3</td>
-                                </tr>
-                                <tr>
-                                    <td>Срок окупаемости</td>
-                                    <td>3.5 лет</td>
-                                    <td><3 лет = 3 балла; 3-5 лет = 2 балла; >5 лет = 1 балл</td>
-                                    <td class="ranking-score">2</td>
-                                </tr>
-                                <tr>
-                                    <td>Риск проекта</td>
-                                    <td>Средний</td>
-                                    <td>Низкий = 3 балла; Средний = 2 балла; Высокий = 1 балл</td>
-                                    <td class="ranking-score">2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="ranking-summary">
-                        <div class="total-score">
-                            <h3>Итоговая оценка (ранг)</h3>
-                            <div class="score-value">85 / 100</div>
-                        </div>
-                        <div class="ranking-chart">
-                            <canvas id="rankingChart"></canvas>
-                        </div>
+                <!-- Вкладка Отчет о проделанной работе -->
+                <div id="work-done" class="tab-pane">
+                    <div class="tab-header">
+                        <h2>Отчет о проделанной работе</h2>
                     </div>
                 </div>
 
-                <!-- Вкладка Комментарии -->
-                <div id="coments" class="tab-pane">
-                    <h2>Комментарии</h2>    
+                <!-- Вкладка Визуализация -->
+                <div id="visual" class="tab-pane">
+                    <div class="tab-header">
+                        <h2>Визуализация</h2>
+                    </div>   
                 </div>
             </div>
         </div>
@@ -230,6 +94,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/project-detail.js"></script>
+    <script src="js/project-control-detail.js"></script>
 </body>
 </html>
