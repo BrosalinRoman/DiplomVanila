@@ -35,7 +35,81 @@
             <div class="page-header">
                 <h1>Контроль за инвестициями</h1>
             </div>
-        </div>
+
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <input type="text" id="projectSearch" placeholder="Поиск по названию проекта...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filters">
+                        <select id="directionFilter">
+                            <option value="">Все направления</option>
+                            <option value="IT">IT</option>
+                            <option value="Производство">Производство</option>
+                            <option value="Логистика">Логистика</option>
+                        </select>
+                        <select id="departmentFilter">
+                            <option value="">Все подразделения</option>
+                            <option value="Департамент развития">Департамент развития</option>
+                            <option value="Филиал Восток">Филиал Восток</option>
+                            <option value="Центральный офис">Центральный офис</option>
+                        </select>
+                        <select id="sortSelect">
+                            <option value="date">Дата создания</option>
+                            <option value="name">Название (А-Я)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="projects-list">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Название проекта</th>
+                                <th>Категория</th>
+                                <th>Направление</th>
+                                <th>Структурное подразделение</th>
+                                <th>Необходимо(BYN)</th>
+                                <th>Проинвестировано(BYN)</th>
+                                <th>Прогресс(%)</th>
+                                <th>Дата начала инвестиций</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="project-row" data-project-id="1">
+                                <td class="project-name">Развитие IT-инфраструктуры</td>
+                                <td class="project-category">Ориентированные на социальный эффект</td>
+                                <td class="project-direction">IT</td>
+                                <td class="project-department">Департамент развития</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-20</td>
+                            </tr>
+                            <tr class="project-row" data-project-id="2">
+                                <td class="project-name">Строительство цеха №2</td>
+                                <td class="project-category">Приносящие прибыль</td>
+                                <td class="project-direction">Производство</td>
+                                <td class="project-department">Филиал Восток</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-18</td>
+                            </tr>
+                            <tr class="project-row" data-project-id="3">
+                                <td class="project-name">Закупка оборудования</td>
+                                <td class="project-category">Снижающие затраты</td>
+                                <td class="project-direction">Логистика</td>
+                                <td class="project-department">Центральный офис</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>    
     </main>
 
     <footer class="main-footer">
