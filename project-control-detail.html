@@ -35,10 +35,10 @@
                     <h1>Проект: "Развитие IT-инфраструктуры"</h1>
                     <div class="project-meta">
                         <span>Бюджет: 35000 BYN</span>
-                        <span>Проинвестировано: 25000 BYN</span>
-                        <span>Осталось: 10000 BYN</span>
-                        <span>Затрачено: 22000 BYN</span>
-                        <span>Прогресс: 70%</span>
+                        <span>Проинвестировано: <span id="investedTotal">25000</span> BYN</span>
+                        <span>Осталось: <span id="leftTotal">10000</span> BYN</span>
+                        <span>Затрачено: <span id="spentTotal">7000</span> BYN</span>
+                        <span>Прогресс: <span id="progressPercent">20</span>%</span>
                     </div>
                 </div>
                 <div class="project-actions">
@@ -59,28 +59,91 @@
                 <div id="invest" class="tab-pane active">
                     <div class="tab-header">
                         <h2>Инвестиции</h2>
+                        <button class="btn-primary" id="addInvestBtn">+ Добавить инвестицию</button>
                     </div>
+                    <table class="data-table" id="investmentsTable">
+                        <thead>
+                            <tr>
+                                <th>План, BYN</th>
+                                <th>Факт, BYN</th>
+                                <th>Планируемая дата внесения</th>
+                                <th>Дата внесения</th>
+                                <th>Функционал</th>
+                            </tr>
+                        </thead>
+                        <tbody id="investmentsBody">
+                            <!-- Данные вставляются скриптом -->
+                        </tbody>
+                        <tfoot id="investmentsFooter">
+                            <tr>
+                                <td id="totalPlan">0</td>
+                                <td id="totalFact">0</td>
+                                <td id="maxPlanDate">-</td>
+                                <td id="maxFactDate">-</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 
-                <!-- Вкладка Затраты -->
+                <!-- Вкладка Затраты (без изменений) -->
                 <div id="cost" class="tab-pane">
                     <div class="tab-header">
                         <h2>Затраты</h2>
-                    </div>                   
+                        <button class="btn-primary" id="addCostBtn">+ Добавить затраты</button>
+                    </div>
+                    <table class="data-table" id="costsTable">
+                        <thead>
+                            <tr>
+                                <th>Сумма, BYN</th>
+                                <th>Описание</th>
+                                <th>Ответственный</th>
+                                <th>Дата</th>
+                                <th>Функционал</th>
+                            </tr>
+                        </thead>
+                        <tbody id="costsBody">
+                            <!-- Данные вставляются скриптом -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td id="totalCosts">0</td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 
                 <!-- Вкладка Отчет о проделанной работе -->
                 <div id="work-done" class="tab-pane">
                     <div class="tab-header">
-                        <h2>Отчет о проделанной работе</h2>
+                        <h2>Отчет о проделанной работе<p>Заполняются каждую неделю ответсвенным</p></h2>
+                        <button class="btn-primary" id="addWorkBtn">+ Добавить запись</button>                       
                     </div>
+                    
+                    <table class="data-table" id="workDoneTable">
+                        <thead>
+                            <tr>
+                                <th>Описание</th>
+                                <th>Прогресс, %</th>
+                                <th>Дата и время</th>
+                                <th>Функционал</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workDoneBody">
+                            <!-- Данные вставляются скриптом -->
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Вкладка Визуализация -->
                 <div id="visual" class="tab-pane">
                     <div class="tab-header">
                         <h2>Визуализация</h2>
-                    </div>   
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="progressChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,6 +155,71 @@
             <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
         </div>
     </footer>
+
+    <!-- Модальное окно для затрат (без изменений) -->
+    <div class="modal-overlay" id="costModal">
+        <div class="modal">
+            <h2 id="costModalTitle">Добавить затраты</h2>
+            <div class="form-group">
+                <label for="costAmount">Сумма, BYN</label>
+                <input type="number" id="costAmount" class="modal-field" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+                <label for="costDescription">Описание</label>
+                <textarea id="costDescription" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="costResponsible">Ответственный</label>
+                <input type="text" id="costResponsible">
+            </div>
+            <div class="form-group">
+                <label for="costDate">Дата</label>
+                <input type="date" id="costDate">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelCostModal">Отмена</button>
+                <button class="btn-primary" id="saveCostBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для отчета (без изменений) -->
+    <div class="modal-overlay" id="workModal">
+        <div class="modal">
+            <h2 id="workModalTitle">Добавить запись</h2>
+            <div class="form-group">
+                <label for="workDescription">Описание</label>
+                <textarea id="workDescription" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="workProgress">Прогресс, %</label>
+                <input type="number" id="workProgress" min="0" max="100" step="1">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelWorkModal">Отмена</button>
+                <button class="btn-primary" id="saveWorkBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для инвестиций (только фактические поля) -->
+    <div class="modal-overlay" id="investModal">
+        <div class="modal">
+            <h2 id="investModalTitle">Добавить инвестицию</h2>
+            <div class="form-group">
+                <label for="investFact">Факт, BYN</label>
+                <input type="number" id="investFact" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+                <label for="investFactDate">Фактическая дата</label>
+                <input type="date" id="investFactDate">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancelInvestModal">Отмена</button>
+                <button class="btn-primary" id="saveInvestBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/project-control-detail.js"></script>
