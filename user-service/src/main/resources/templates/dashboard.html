@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - User Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .logout { float: right; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Dashboard</h2>
+        <p>Welcome, <span th:text="${user}"></span>!
+            <form action="/logout" method="post" style="display: inline;">
+                <button type="submit" class="logout">Logout</button>
+            </form>
+        </p>
+        <p th:if="${roles != null and roles.contains('ADMIN')}">
+            <a href="/admin">Open Admin Panel</a>
+        </p>
+        <p>
+            <a href="/password">Change password</a>
+        </p>
+
+        <h3>Users</h3>
+        <table th:if="${roles != null and roles.contains('ADMIN')}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Active</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.roles}"></td>
+                    <td th:text="${user.isActive}"></td>
+                    <td th:text="${user.createdAt}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p th:if="${roles == null or not roles.contains('ADMIN')}">You do not have permission to view users.</p>
+    </div>
+</body>
+</html>

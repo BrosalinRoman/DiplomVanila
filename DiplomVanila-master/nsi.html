@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>НСИ - Управление инвестиционными проектами</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/nsi.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="home.html" class="logo-link">
+                <img src="images/logo.png" alt="Логотип системы" class="logo">
+                <span class="system-name">Система управления инвестиционными проектами</span>
+            </a>
+            <nav class="main-nav">
+                <a href="home.html" class="nav-link">Главная</a>
+                <a href="nsi.html" class="nav-link active">НСИ</a>
+                <a href="projects.html" class="nav-link">Инвестпроекты</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="control.html" class="nav-link">Контроль</a>
+            </nav>
+            <div class="user-menu">
+                <span class="user-name">Иванов А.В.<br />(Администратор)</span>
+                <button class="logout-btn">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="nsi-container">
+            <div class="page-header">
+                <h1>Нормативно-Справочная Информация</h1>
+            </div>
+
+            <!-- Вкладки -->
+            <div class="nsi-tabs">
+                <button class="tab-button active" data-tab="formuls">Формулы</button>
+                <button class="tab-button" data-tab="directions">Направления</button>
+                <button class="tab-button" data-tab="categories">Категории</button>
+                <button class="tab-button" data-tab="statuses">Статусы</button>
+                <button class="tab-button" data-tab="ranges">Диапазоны характеристик</button>
+                <button class="tab-button" data-tab="divisions">Подразделения</button>
+                <button class="tab-button" data-tab="users">Пользователи</button>
+            </div>
+
+            <!-- Вкладка Формулы -->
+            <div id="formuls" class="tab-pane active">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Формулы</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="formula">+ Добавить формулу</button>
+                    </div>
+                    <div class="formulas-tree">
+                        <!-- Категория: Финансы -->
+                        <div class="tree-category">
+                            <div class="category-header">
+                                <span class="category-icon">📈</span>
+                                <h3>Финансы</h3>
+                            </div>
+                            <div class="formulas-list">
+                                <div class="formula-item" data-id="1">
+                                    <div class="formula-header">
+                                        <h4>NPV (Чистая приведенная стоимость)</h4>
+                                        <div class="item-actions">
+                                            <button class="btn-edit-item" title="Редактировать">✎</button>
+                                            <button class="btn-delete-item" title="Удалить">🗑</button>
+                                        </div>
+                                    </div>
+                                    <div class="formula-content">
+                                        <div class="formula-expression">
+                                            NPV = ∑(Ct / (1 + r)^t) - C₀
+                                        </div>
+                                        <div class="formula-description">
+                                            <p><strong>Описание:</strong> Показывает разницу между текущей стоимостью
+                                                денежных поступлений и текущей стоимостью денежных выплат.</p>
+                                            <p><strong>Где:</strong> Ct - денежный поток в период t, r - ставка
+                                                дисконтирования, C₀ - первоначальные инвестиции</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="formula-item" data-id="2">
+                                    <div class="formula-header">
+                                        <h4>IRR (Внутренняя норма доходности)</h4>
+                                        <div class="item-actions">
+                                            <button class="btn-edit-item" title="Редактировать">✎</button>
+                                            <button class="btn-delete-item" title="Удалить">🗑</button>
+                                        </div>
+                                    </div>
+                                    <div class="formula-content">
+                                        <div class="formula-expression">
+                                            NPV = 0 = ∑(Ct / (1 + IRR)^t) - C₀
+                                        </div>
+                                        <div class="formula-description">
+                                            <p><strong>Описание:</strong> Ставка дисконтирования, при которой чистая
+                                                приведенная стоимость равна нулю.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Категория: Производство -->
+                        <div class="tree-category">
+                            <div class="category-header">
+                                <span class="category-icon">🏭</span>
+                                <h3>Производство</h3>
+                            </div>
+                            <div class="formulas-list">
+                                <div class="formula-item" data-id="3">
+                                    <div class="formula-header">
+                                        <h4>Расчет себестоимости</h4>
+                                        <div class="item-actions">
+                                            <button class="btn-edit-item" title="Редактировать">✎</button>
+                                            <button class="btn-delete-item" title="Удалить">🗑</button>
+                                        </div>
+                                    </div>
+                                    <div class="formula-content">
+                                        <div class="formula-expression">
+                                            Себестоимость = Прямые затраты + Косвенные затраты
+                                        </div>
+                                        <div class="formula-description">
+                                            <p><strong>Описание:</strong> Расчет полной себестоимости продукции.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Направления -->
+            <div id="directions" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Направления</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="direction">+ Добавить направление</button>
+                    </div>
+                    <div class="items-list">
+                        <div class="list-item" data-id="1">
+                            <div class="item-header">
+                                <h4>IT</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Информационные технологии, разработка ПО</p>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="2">
+                            <div class="item-header">
+                                <h4>Производство</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Промышленное производство, цеха</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Категории -->
+            <div id="categories" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Категории</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="category">+ Добавить Категории</button>
+                    </div>
+                    <div class="items-list">
+                        <div class="list-item" data-id="1">
+                            <div class="item-header">
+                                <h4>Приносящие прибыль</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проекты, инвестиции в которые в будущем принесут прибыль
+                                </p>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="2">
+                            <div class="item-header">
+                                <h4>Снижающие затраты</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проекты, инвестирование в которые в будущем снизит затраты
+                                    на что-либо</p>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="3">
+                            <div class="item-header">
+                                <h4>Ориентированные на социальный эффект</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проекты, которые не приносят прибыль, но положительно
+                                    влияют на отношение сотрудников и клиентов</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Статусы (с цветами) -->
+            <div id="statuses" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Статусы</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="status">+ Добавить статус</button>
+                    </div>
+                    <div class="items-list">
+                        <!-- Подан -->
+                        <div class="list-item status-item status-podan" data-id="1">
+                            <div class="item-header">
+                                <h4>Подан</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Заявка подана, ожидает рассмотрения</p>
+                            </div>
+                        </div>
+                        <!-- На рассмотрении -->
+                        <div class="list-item status-item status-na-rassmotrenii" data-id="2">
+                            <div class="item-header">
+                                <h4>На рассмотрении</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Заявка находится на рассмотрении</p>
+                            </div>
+                        </div>
+                        <!-- Одобрен -->
+                        <div class="list-item status-item status-odobren" data-id="3">
+                            <div class="item-header">
+                                <h4>Одобрен</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проект одобрен к реализации</p>
+                            </div>
+                        </div>
+                        <!-- На доработке -->
+                        <div class="list-item status-item status-na-dorabotke" data-id="4">
+                            <div class="item-header">
+                                <h4>На доработке</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Требуется доработка заявки</p>
+                            </div>
+                        </div>
+                        <!-- Отклонен -->
+                        <div class="list-item status-item status-otklonen" data-id="5">
+                            <div class="item-header">
+                                <h4>Отклонен</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Заявка отклонена</p>
+                            </div>
+                        </div>
+                        <!-- Активен -->
+                        <div class="list-item status-item status-aktiven" data-id="6">
+                            <div class="item-header">
+                                <h4>Активен</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проект в активной стадии</p>
+                            </div>
+                        </div>
+                        <!-- Завершен -->
+                        <div class="list-item status-item status-zavershen" data-id="7">
+                            <div class="item-header">
+                                <h4>Завершен</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Проект успешно завершён</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Диапазоны характеристик (с таблицей диапазонов) -->
+            <div id="ranges" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Диапазоны характеристик</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="range">+ Добавить диапазон</button>
+                    </div>
+                    <div class="items-list">
+                        <div class="list-item" data-id="1">
+                            <div class="item-header">
+                                <h4>Ранг проекта</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <table class="range-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Диапазон</th>
+                                            <th>Балл</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1 - 3</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4 - 6</td>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7 - 10</td>
+                                            <td>3</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="range-description"><strong>Описание:</strong> Приоритет проекта (чем выше
+                                    балл, тем выше приоритет)</p>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="2">
+                            <div class="item-header">
+                                <h4>Объём инвестиций</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <table class="range-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Диапазон</th>
+                                            <th>Балл</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0 - 10</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>11 - 50</td>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>51 - 100</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>> 100</td>
+                                            <td>4</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="range-description"><strong>Описание:</strong> Объём инвестиций влияет на
+                                    масштаб проекта</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Подразделения (аналогично направлениям) -->
+            <div id="divisions" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Подразделения</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по названию...">
+                        <button class="btn-primary add-item-btn" data-type="division">+ Добавить подразделение</button>
+                    </div>
+                    <div class="items-list">
+                        <div class="list-item" data-id="1">
+                            <div class="item-header">
+                                <h4>Департамент развития</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Отвечает за стратегическое развитие</p>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="2">
+                            <div class="item-header">
+                                <h4>Филиал Восток</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <p><strong>Описание:</strong> Восточный региональный филиал</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка Пользователи -->
+            <div id="users" class="tab-pane">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h2>Пользователи</h2>
+                        <input type="text" class="search-input" placeholder="Поиск по имени...">
+                        <button class="btn-primary add-item-btn" data-type="user">+ Добавить пользователя</button>
+                    </div>
+                    <div class="items-list">
+                        <div class="list-item" data-id="1">
+                            <div class="item-header">
+                                <h4>Иванов Иван Иванович</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <div class="user-fields">
+                                    <div class="field"><span class="field-label">Логин:</span> ivanov</div>
+                                    <div class="field"><span class="field-label">Пароль:</span> ••••••••</div>
+                                    <div class="field"><span class="field-label">Подразделение:</span> IT отдел</div>
+                                    <div class="field"><span class="field-label">Роль:</span> Администратор</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-item" data-id="2">
+                            <div class="item-header">
+                                <h4>Петров Пётр Петрович</h4>
+                                <div class="item-actions">
+                                    <button class="btn-edit-item" title="Редактировать">✎</button>
+                                    <button class="btn-delete-item" title="Удалить">🗑</button>
+                                </div>
+                            </div>
+                            <div class="item-description">
+                                <div class="user-fields">
+                                    <div class="field"><span class="field-label">Логин:</span> petrov</div>
+                                    <div class="field"><span class="field-label">Пароль:</span> ••••••••</div>
+                                    <div class="field"><span class="field-label">Подразделение:</span> Бухгалтерия</div>
+                                    <div class="field"><span class="field-label">Роль:</span> Заявитель</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Система управления инвестиционными проектами</p>
+            <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
+        </div>
+    </footer>
+
+    <script src="js/nsi.js"></script>
+</body>
+
+</html>

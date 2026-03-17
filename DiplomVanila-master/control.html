@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контроль - Управление инвестиционными проектами</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/control.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="home.html" class="logo-link">
+                <img src="images/logo.png" alt="Логотип системы" class="logo">
+                <span class="system-name">Система управления инвестиционными проектами</span>
+            </a>
+            <nav class="main-nav">
+                <a href="home.html" class="nav-link">Главная</a>
+                <a href="nsi.html" class="nav-link">НСИ</a>
+                <a href="projects.html" class="nav-link">Инвестпроекты</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="control.html" class="nav-link active">Контроль</a>
+            </nav>
+            <div class="user-menu">
+                <span class="user-name">Иванов А.В.<br />(Администратор)</span>
+                <button class="logout-btn">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="control-container">
+            <div class="page-header">
+                <h1>Контроль за инвестициями</h1>
+            </div>
+
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <input type="text" id="projectSearch" placeholder="Поиск по названию проекта...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filters">
+                        <select id="directionFilter">
+                            <option value="">Все направления</option>
+                            <option value="IT">IT</option>
+                            <option value="Производство">Производство</option>
+                            <option value="Логистика">Логистика</option>
+                        </select>
+                        <select id="departmentFilter">
+                            <option value="">Все подразделения</option>
+                            <option value="Департамент развития">Департамент развития</option>
+                            <option value="Филиал Восток">Филиал Восток</option>
+                            <option value="Центральный офис">Центральный офис</option>
+                        </select>
+                        <select id="sortSelect">
+                            <option value="date">Дата создания</option>
+                            <option value="name">Название (А-Я)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="projects-list">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Название проекта</th>
+                                <th>Категория</th>
+                                <th>Направление</th>
+                                <th>Структурное подразделение</th>
+                                <th>Необходимо(BYN)</th>
+                                <th>Проинвестировано(BYN)</th>
+                                <th>Прогресс(%)</th>
+                                <th>Дата начала инвестиций</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="project-row" data-project-id="1">
+                                <td class="project-name">Развитие IT-инфраструктуры</td>
+                                <td class="project-category">Ориентированные на социальный эффект</td>
+                                <td class="project-direction">IT</td>
+                                <td class="project-department">Департамент развития</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-20</td>
+                            </tr>
+                            <tr class="project-row" data-project-id="2">
+                                <td class="project-name">Строительство цеха №2</td>
+                                <td class="project-category">Приносящие прибыль</td>
+                                <td class="project-direction">Производство</td>
+                                <td class="project-department">Филиал Восток</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-18</td>
+                            </tr>
+                            <tr class="project-row" data-project-id="3">
+                                <td class="project-name">Закупка оборудования</td>
+                                <td class="project-category">Снижающие затраты</td>
+                                <td class="project-direction">Логистика</td>
+                                <td class="project-department">Центральный офис</td>
+                                <td class="project-budget">35000</td>
+                                <td class="project-invest">25000</td>
+                                <td class="project-progres">70</td>
+                                <td class="project-date">2024-01-15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>    
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Система управления инвестиционными проектами</p>
+            <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/control.js"></script>
+</body>
+
+</html>

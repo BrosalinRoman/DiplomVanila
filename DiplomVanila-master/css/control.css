@@ -1,0 +1,111 @@
+.control-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.projects-controls {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-box input {
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-gray);
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filters select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: white;
+    font-size: 0.9rem;
+    min-width: 150px;
+}
+
+.projects-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.projects-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.projects-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.projects-table tr:last-child td {
+    border-bottom: none;
+}
+
+.projects-table tr:hover {
+    background-color: var(--light-gray);
+    cursor: pointer;
+}
+
+.project-name {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .projects-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filters select {
+        min-width: auto;
+    }
+    
+    .projects-table {
+        font-size: 0.8rem;
+    }
+    
+    .projects-table th,
+    .projects-table td {
+        padding: 0.5rem;
+    }
+}

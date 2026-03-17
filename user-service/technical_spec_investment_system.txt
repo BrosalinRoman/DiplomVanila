@@ -1,0 +1,1390 @@
+Техническое задание
+Система управления инвестиционными проектами
+1. Общая информация
+Документ описывает техническое задание на разработку системы управления инвестиционными проектами.
+Цель документа — определить функциональные возможности системы, архитектуру, используемые технологии и структуру данных.
+2. Назначение системы
+Система управления инвестиционными проектами предназначена для автоматизации процессов подачи, рассмотрения, оценки и хранения инвестиционных проектов внутри организации.
+Система должна решать следующие задачи:
+•	Регистрация и управление пользователями системы
+•	Подача инвестиционных проектов
+•	Хранение и управление нормативно‑справочной информацией (НСИ)
+•	Оценка и ранжирование проектов по заданным характеристикам
+•	Хранение документов проекта
+•	Формирование отчётов и выгрузок
+•	Предоставление данных для аналитической системы
+3. Пользователи системы
+В системе предусмотрены следующие роли пользователей:
+•	Заявитель — пользователь, который создает и подает инвестиционные проекты.
+•	Инвестор — пользователь, который рассматривает и оценивает проекты.
+•	Администратор — пользователь, который управляет системой, справочниками и пользователями.
+4. Основные функции системы
+4.1 Управление пользователями
+•	Создание пользователей администратором
+•	Назначение ролей
+•	Блокировка и разблокировка пользователей
+•	Сброс пароля
+•	Авторизация пользователей
+4.2 Управление инвестиционными проектами
+•	Создание проекта
+•	Редактирование проекта
+•	Отправка проекта на рассмотрение
+•	Просмотр списка проектов
+•	Изменение статуса проекта
+•	Добавление этапов проекта
+•	Хранение характеристик проекта
+•	Хранение истории статусов
+4.3 Управление НСИ
+•	Справочник направлений инвестиций
+•	Справочник характеристик проектов
+•	Настройка весов характеристик для ранжирования
+•	Настройка диапазонов значений характеристик
+4.4 Работа с документами
+•	Загрузка ТЭО проекта
+•	Хранение файлов в файловой системе сервера
+•	Формирование документа Word с информацией о проекте
+5. Архитектура системы
+Система реализуется с использованием микросервисной архитектуры. Каждый сервис отвечает за отдельную область бизнес‑логики.
+Основные сервисы системы:
+•	User Service — управление пользователями и ролями
+•	NSI Service — управление нормативно‑справочной информацией
+•	Project Service — управление инвестиционными проектами
+•	Analytics Service — аналитика и отчеты (разрабатывается отдельно)
+•	Gateway — единая точка входа для клиентского приложения
+6. Используемые технологии
+•	Java (Spring Boot) — backend сервисы
+•	React — пользовательский интерфейс
+•	PostgreSQL — система управления базой данных
+•	gRPC — взаимодействие между микросервисами
+•	JWT — авторизация пользователей
+•	bcrypt — хеширование паролей
+•	Apache POI — генерация документов Word
+7. Структура базы данных
+База данных PostgreSQL используется всеми сервисами, но каждый сервис работает со своей схемой.
+Основные таблицы:
+•	users — пользователи системы
+•	roles — роли пользователей
+•	projects — инвестиционные проекты
+•	project_stages — этапы проекта
+•	project_characteristics — характеристики проекта
+•	project_status_history — история изменения статусов
+•	directions — направления инвестиций
+•	scoring_rules — правила расчета рейтинга проектов
+8. Характеристики проектов
+Характеристики проектов хранятся в универсальной структуре, что позволяет добавлять новые показатели без изменения структуры базы данных.
+•	ROI — рентабельность инвестиций
+•	IRR — внутренняя норма доходности
+•	NPV — чистая приведенная стоимость
+•	PI — индекс прибыльности
+9. Ранжирование проектов
+Для оценки проектов используется балльная система. Каждая характеристика имеет определенный вес.
+Формула расчета рейтинга:
+Score = (характеристика × вес) + ...
+10. Хранение файлов
+Документы проекта (ТЭО и другие файлы) хранятся в файловой системе сервера. В базе данных хранится только путь к файлу.
+11. Архив проектов
+Проекты могут быть переведены в статус ARCHIVED. Такие проекты не отображаются в основном списке, но сохраняются в базе данных.
+12. Безопасность системы
+•	Авторизация через JWT
+•	Хеширование паролей с использованием bcrypt
+•	Разграничение прав доступа по ролям
+13. Интерфейс пользователя
+•	Страница авторизации
+•	Список проектов
+•	Карточка проекта
+•	Редактирование проекта
+•	Страница справочников (НСИ)
+•	Страница администрирования
+14. Перспективы развития системы
+•	Интеграция с системами финансового учета
+•	Расширенная аналитика проектов
+•	Автоматическая оценка эффективности проектов
+ 
+1. Общая архитектура системы
+•	Система будет построена по микросервисной архитектуре.
+•	Основные компоненты
+•	Frontend (React)
+        |
+        |
+     Gateway
+        |
+ ┌──────┼───────────────┐
+ |      |               |
+User  NSI            Project
+Service Service      Service
+ |      |               |
+ └──────┴───────┬───────┘
+                |
+           PostgreSQL
+        (разные схемы)
+•	Также есть отдельный сервис аналитики, который разрабатывает другой разработчик.
+•	Analytics Service (C#)
+•	Он будет получать данные через gRPC.
+•	________________________________________
+•	2. Описание микросервисов
+•	2.1 User Service
+•	Отвечает за:
+•	пользователей
+•	роли
+•	авторизацию
+•	Основные функции
+•	регистрация пользователя
+•	авторизация
+•	блокировка пользователя
+•	назначение ролей
+•	сброс пароля
+•	Таблицы
+•	users
+roles
+user_roles
+•	Поля users
+•	id
+login
+password_hash
+email
+is_active
+created_at
+•	________________________________________
+•	2.2 NSI Service
+•	НСИ — нормативно-справочная информация
+•	Содержит все справочники системы.
+•	Таблицы
+•	directions
+characteristics
+scoring_rules
+ranges
+statuses
+•	directions
+•	id
+name
+description
+•	________________________________________
+•	characteristics
+•	описывает характеристики проекта
+•	id
+name
+description
+unit
+•	Примеры:
+•	ROI
+IRR
+NPV
+PI
+•	________________________________________
+•	scoring_rules
+•	веса характеристик
+•	id
+characteristic_id
+weight
+•	Пример:
+•	ROI 0.4
+IRR 0.3
+NPV 0.3
+•	________________________________________
+•	2.3 Project Service
+•	Это основной сервис системы.
+•	Отвечает за:
+•	инвестиционные проекты
+•	этапы проекта
+•	характеристики проекта
+•	документы
+•	статусы
+•	историю статусов
+•	________________________________________
+•	Таблицы
+•	projects
+project_stages
+project_characteristics
+project_documents
+project_status_history
+•	________________________________________
+•	projects
+•	id
+name
+description
+direction_id
+author_id
+status
+created_at
+updated_at
+•	________________________________________
+•	project_stages
+•	этапы проекта
+•	id
+project_id
+name
+start_date
+end_date
+budget
+description
+•	________________________________________
+•	project_characteristics
+•	универсальная таблица характеристик
+•	id
+project_id
+characteristic_id
+value
+•	________________________________________
+•	project_documents
+•	id
+project_id
+file_path
+file_type
+uploaded_at
+•	________________________________________
+•	project_status_history
+•	id
+project_id
+old_status
+new_status
+changed_by
+changed_at
+comment
+•	________________________________________
+•	3. PostgreSQL структура
+•	Используется одна БД, но разные схемы.
+•	investment_system
+•	________________________________________
+•	схема user_service
+•	users
+roles
+user_roles
+•	________________________________________
+•	схема nsi_service
+•	directions
+characteristics
+scoring_rules
+ranges
+statuses
+•	________________________________________
+•	схема project_service
+•	projects
+project_stages
+project_characteristics
+project_documents
+project_status_history
+•	________________________________________
+•	4. Взаимодействие сервисов
+•	Сервисы взаимодействуют через gRPC.
+•	Примеры:
+•	Project Service → User Service
+•	получить пользователя
+•	GetUserById
+•	________________________________________
+•	Project Service → NSI Service
+•	получить направление
+•	GetDirection
+•	________________________________________
+•	5. Авторизация
+•	Используется JWT.
+•	Процесс:
+•	1 пользователь вводит логин и пароль
+2 User Service проверяет пароль
+3 создается JWT токен
+4 фронтенд отправляет токен в каждом запросе
+•	________________________________________
+•	6. Хранение файлов
+•	Файлы будут храниться в файловой системе.
+•	Пример структуры:
+•	/files
+   /projects
+       /1
+         teo.pdf
+         calculation.xlsx
+       /2
+         teo.pdf
+•	В БД хранится только:
+•	file_path
+•	________________________________________
+•	7. Ранжирование проектов
+•	Алгоритм:
+•	1 получаем характеристики проекта
+2 получаем веса из НСИ
+3 считаем рейтинг
+•	Формула:
+•	score = Σ (характеристика * вес)
+•	________________________________________
+•	8. Основные статусы проекта
+•	DRAFT
+ON_REVIEW
+APPROVED
+REJECTED
+ARCHIVED
+•	________________________________________
+•	9. Основные страницы интерфейса
+•	Авторизация
+•	логин / пароль
+•	________________________________________
+•	Список проектов
+•	фильтры:
+•	статус
+направление
+дата
+автор
+•	________________________________________
+•	Карточка проекта
+•	содержит:
+•	описание
+•	этапы
+•	характеристики
+•	документы
+•	статус
+•	историю изменений
+•	________________________________________
+•	НСИ
+•	редактирование:
+•	направлений
+•	характеристик
+•	весов
+•	________________________________________
+•	Администрирование
+•	управление пользователями.
+
+1. Общая структура БД
+•	У нас одна PostgreSQL база, но 3 схемы:
+•	user_service
+•	users
+•	roles
+•	user_roles
+•	nsi_service
+•	directions
+•	characteristics
+•	scoring_rules
+•	statuses
+•	project_service
+•	projects
+•	project_stages
+•	project_characteristics
+•	project_documents
+•	project_status_history
+•	________________________________________
+•	2. Таблицы User Service
+•	users
+•	Пользователи системы.
+•	поле	•	тип
+•	id	•	UUID
+•	login	•	varchar
+•	password_hash	•	varchar
+•	email	•	varchar
+•	is_active	•	boolean
+•	created_at	•	timestamp
+•	________________________________________
+•	roles
+•	Роли пользователей.
+•	поле	•	тип
+•	id	•	UUID
+•	name	•	varchar
+•	Примеры:
+•	ADMIN
+•	INVESTOR
+•	APPLICANT
+•	________________________________________
+•	user_roles
+•	Связь пользователей и ролей.
+•	поле	•	тип
+•	id	•	UUID
+•	user_id	•	UUID
+•	role_id	•	UUID
+•	________________________________________
+•	3. Таблицы NSI Service
+•	directions
+•	Направления инвестиций.
+•	поле	•	тип
+•	id	•	UUID
+•	name	•	varchar
+•	description	•	text
+•	________________________________________
+•	characteristics
+•	Характеристики проектов.
+•	поле	•	тип
+•	id	•	UUID
+•	name	•	varchar
+•	description	•	text
+•	unit	•	varchar
+•	Примеры:
+•	ROI
+•	IRR
+•	NPV
+•	PI
+•	________________________________________
+•	scoring_rules
+•	Вес характеристик для ранжирования.
+•	поле	•	тип
+•	id	•	UUID
+•	characteristic_id	•	UUID
+•	weight	•	numeric
+•	Пример:
+•	characteristic	•	weight
+•	ROI	•	0.4
+•	IRR	•	0.3
+•	NPV	•	0.3
+•	________________________________________
+•	statuses
+•	Статусы проектов.
+•	поле	•	тип
+•	id	•	UUID
+•	name	•	varchar
+•	description	•	text
+•	Примеры:
+•	DRAFT
+•	ON_REVIEW
+•	APPROVED
+•	REJECTED
+•	ARCHIVED
+•	________________________________________
+•	4. Таблицы Project Service
+•	projects
+•	Основная таблица проектов.
+•	поле	•	тип
+•	id	•	UUID
+•	name	•	varchar
+•	description	•	text
+•	direction_id	•	UUID
+•	author_id	•	UUID
+•	status_id	•	UUID
+•	created_at	•	timestamp
+•	updated_at	•	timestamp
+•	________________________________________
+•	project_stages
+•	Этапы реализации проекта.
+•	поле	•	тип
+•	id	•	UUID
+•	project_id	•	UUID
+•	name	•	varchar
+•	start_date	•	date
+•	end_date	•	date
+•	budget	•	numeric
+•	description	•	text
+•	________________________________________
+•	project_characteristics
+•	Характеристики проекта.
+•	поле	•	тип
+•	id	•	UUID
+•	project_id	•	UUID
+•	characteristic_id	•	UUID
+•	value	•	numeric
+•	Пример:
+•	project	•	characteristic	•	value
+•	1	•	ROI	•	0.18
+•	1	•	IRR	•	0.22
+•	1	•	NPV	•	120000
+•	________________________________________
+•	project_documents
+•	Документы проекта.
+•	поле	•	тип
+•	id	•	UUID
+•	project_id	•	UUID
+•	file_path	•	varchar
+•	file_type	•	varchar
+•	uploaded_at	•	timestamp
+•	________________________________________
+•	project_status_history
+•	История изменения статусов.
+•	поле	•	тип
+•	id	•	UUID
+•	project_id	•	UUID
+•	old_status_id	•	UUID
+•	new_status_id	•	UUID
+•	changed_by	•	UUID
+•	changed_at	•	timestamp
+•	comment	•	text
+•	________________________________________
+•	5. Связи между таблицами
+•	users → projects
+•	users (1) —— (N) projects
+•	Пользователь может создать много проектов.
+•	________________________________________
+•	directions → projects
+•	directions (1) —— (N) projects
+•	У проекта одно направление.
+•	________________________________________
+•	projects → project_stages
+•	projects (1) —— (N) project_stages
+•	У проекта несколько этапов.
+•	________________________________________
+•	projects → project_characteristics
+•	projects (1) —— (N) project_characteristics
+•	У проекта много характеристик.
+•	________________________________________
+•	characteristics → project_characteristics
+•	characteristics (1) —— (N) project_characteristics
+•	________________________________________
+•	projects → project_documents
+•	projects (1) —— (N) project_documents
+•	________________________________________
+•	projects → project_status_history
+•	projects (1) —— (N) project_status_history
+•	________________________________________
+•	roles → user_roles
+•	roles (1) —— (N) user_roles
+•	________________________________________
+•	users → user_roles
+•	users (1) —— (N) user_roles
+•	________________________________________
+•	6. Логическая ER-диаграмма (упрощенно)
+•	users
+  |
+  | 1
+  |
+  | N
+projects -------- directions
+  |  \
+  |   \
+  |    project_documents
+  |
+  project_stages
+  |
+  project_characteristics ---- characteristics
+  |
+  project_status_history ---- statuses
+
+
+
+
+•	REST + Gateway
+•	Frontend
+   |
+Gateway
+   |
+REST
+   |
+User Service
+NSI Service
+Project Service
+•	Но мы можем спроектировать gRPC как архитектурную возможность.
+•	На защите можно сказать:
+•	"Внутреннее взаимодействие может быть реализовано через REST или gRPC".
+•	Это нормальная практика.
+•	________________________________________
+•	2. Структура репозиториев (Git)
+•	Лучший вариант:
+•	investment-system
+│
+├── gateway
+│
+├── user-service
+│
+├── nsi-service
+│
+├── project-service
+│
+├── common-lib
+│
+└── docs
+•	________________________________________
+•	gateway
+•	Spring Cloud Gateway
+•	gateway
+ ├── src
+ ├── pom.xml
+ └── Dockerfile
+•	________________________________________
+•	user-service
+•	user-service
+ ├── src
+ ├── pom.xml
+ └── Dockerfile
+•	________________________________________
+•	nsi-service
+•	nsi-service
+ ├── src
+ ├── pom.xml
+ └── Dockerfile
+•	________________________________________
+•	project-service
+•	project-service
+ ├── src
+ ├── pom.xml
+ └── Dockerfile
+•	________________________________________
+•	common-lib
+•	общие DTO и утилиты
+•	common-lib
+ ├── dto
+ ├── exceptions
+ ├── utils
+ └── pom.xml
+•	________________________________________
+•	3. Структура пакетов микросервисов
+•	Это очень важная часть архитектуры.
+•	Используем слоистую архитектуру.
+•	________________________________________
+•	USER SERVICE
+•	com.investment.userservice
+•	пакеты
+•	config
+controller
+service
+repository
+entity
+dto
+mapper
+security
+exception
+•	________________________________________
+•	Полная структура
+•	userservice
+│
+├── config
+│   └── SecurityConfig
+│
+├── controller
+│   └── AuthController
+│   └── UserController
+│
+├── service
+│   ├── UserService
+│   └── AuthService
+│
+├── repository
+│   ├── UserRepository
+│   └── RoleRepository
+│
+├── entity
+│   ├── User
+│   ├── Role
+│   └── UserRole
+│
+├── dto
+│   ├── LoginRequest
+│   ├── LoginResponse
+│   └── UserDto
+│
+├── mapper
+│   └── UserMapper
+│
+├── security
+│   ├── JwtService
+│   ├── JwtFilter
+│   └── JwtProvider
+│
+└── exception
+    └── GlobalExceptionHandler
+•	________________________________________
+•	NSI SERVICE
+•	com.investment.nsiservice
+•	________________________________________
+•	структура
+•	nsiservice
+│
+├── controller
+│   ├── DirectionController
+│   ├── CharacteristicController
+│   └── ScoringController
+│
+├── service
+│   ├── DirectionService
+│   ├── CharacteristicService
+│   └── ScoringService
+│
+├── repository
+│   ├── DirectionRepository
+│   ├── CharacteristicRepository
+│   └── ScoringRuleRepository
+│
+├── entity
+│   ├── Direction
+│   ├── Characteristic
+│   ├── ScoringRule
+│   └── Status
+│
+├── dto
+│   ├── DirectionDto
+│   ├── CharacteristicDto
+│   └── ScoringRuleDto
+│
+└── mapper
+    └── NsiMapper
+•	________________________________________
+•	PROJECT SERVICE
+•	com.investment.projectservice
+•	________________________________________
+•	структура
+•	projectservice
+│
+├── controller
+│   ├── ProjectController
+│   ├── ProjectStageController
+│   └── ProjectDocumentController
+│
+├── service
+│   ├── ProjectService
+│   ├── StageService
+│   ├── DocumentService
+│   └── RankingService
+│
+├── repository
+│   ├── ProjectRepository
+│   ├── StageRepository
+│   ├── CharacteristicRepository
+│   ├── DocumentRepository
+│   └── StatusHistoryRepository
+│
+├── entity
+│   ├── Project
+│   ├── ProjectStage
+│   ├── ProjectCharacteristic
+│   ├── ProjectDocument
+│   └── ProjectStatusHistory
+│
+├── dto
+│   ├── CreateProjectRequest
+│   ├── ProjectResponse
+│   ├── StageDto
+│   └── CharacteristicDto
+│
+├── mapper
+│   └── ProjectMapper
+│
+└── client
+    ├── UserServiceClient
+    └── NsiServiceClient
+•	client — REST/gRPC клиенты.
+•	________________________________________
+•	4. Структура Gateway
+•	gateway
+│
+├── config
+│   └── GatewayConfig
+│
+└── filter
+    └── JwtAuthFilter
+•	________________________________________
+•	5. REST API структура
+•	Пример endpoints.
+•	________________________________________
+•	User Service
+•	POST /auth/login
+POST /auth/register
+GET /users
+GET /users/{id}
+PUT /users/{id}
+•	________________________________________
+•	NSI Service
+•	GET /directions
+POST /directions
+
+GET /characteristics
+POST /characteristics
+
+GET /scoring-rules
+PUT /scoring-rules
+•	________________________________________
+•	Project Service
+•	GET /projects
+POST /projects
+GET /projects/{id}
+
+POST /projects/{id}/stages
+POST /projects/{id}/documents
+
+POST /projects/{id}/submit
+POST /projects/{id}/approve
+•	________________________________________
+•	6. Если использовать gRPC
+•	proto файлы хранятся:
+•	common-lib
+   └── proto
+•	________________________________________
+•	user.proto
+•	service UserService {
+
+  rpc GetUserById(GetUserRequest)
+  returns (UserResponse);
+
+}
+•	________________________________________
+•	nsi.proto
+•	service NsiService {
+
+  rpc GetDirection(GetDirectionRequest)
+  returns (DirectionResponse);
+
+}
+•	________________________________________
+•	7. Что будет самым правильным решением
+•	Я рекомендую:
+•	✔ REST между сервисами
+✔ Gateway
+✔ JWT
+✔ PostgreSQL
+✔ Spring Boot
+•	gRPC можно упомянуть архитектурно, но не реализовывать.
+
+
+Построим архитектуру безопасности так, как делают в реальных микросервисных системах, но без лишней сложности. Это будет:
+•	понятно на защите
+•	удобно реализовать в Spring Boot
+•	легко масштабировать
+Я покажу полную схему, затем поток авторизации, затем структуру компонентов.
+________________________________________
+1. Общая архитектура безопасности
+Главная идея микросервисной безопасности:
+Аутентификация выполняется один раз → остальные сервисы доверяют токену.
+Используем:
+•	JWT
+•	API Gateway
+•	Spring Security
+•	Role-based access control
+________________________________________
+Архитектурная схема
+Frontend (React)
+        |
+        |
+   API Gateway
+        |
+        |  JWT проверка
+        |
+ ┌──────┼───────────────┐
+ |      |               |
+User  NSI            Project
+Service Service      Service
+________________________________________
+2. Основные компоненты безопасности
+1️⃣ User Service
+Отвечает за:
+•	авторизацию
+•	регистрацию
+•	управление пользователями
+•	генерацию JWT
+________________________________________
+2️⃣ API Gateway
+Отвечает за:
+•	проверку JWT
+•	маршрутизацию запросов
+•	фильтрацию
+________________________________________
+3️⃣ Остальные сервисы
+Они:
+•	не выполняют логин
+•	только проверяют токен
+________________________________________
+3. Процесс авторизации
+Шаг 1
+Пользователь вводит:
+login
+password
+Frontend отправляет запрос:
+POST /auth/login
+в User Service.
+________________________________________
+Шаг 2
+User Service:
+1.	находит пользователя
+2.	проверяет пароль (bcrypt)
+3.	генерирует JWT
+________________________________________
+Шаг 3
+User Service возвращает:
+{
+  "token": "JWT_TOKEN"
+}
+________________________________________
+Шаг 4
+Frontend сохраняет токен:
+localStorage
+________________________________________
+Шаг 5
+Каждый запрос отправляется с токеном:
+Authorization: Bearer JWT_TOKEN
+________________________________________
+4. Структура JWT
+JWT содержит:
+{
+  "userId": "uuid",
+  "login": "user",
+  "roles": ["ADMIN"],
+  "exp": 173456789
+}
+________________________________________
+5. Проверка токена
+Проверка происходит:
+в Gateway
+Gateway проверяет:
+•	подпись
+•	срок действия
+Если токен валиден → запрос проходит.
+________________________________________
+6. Авторизация по ролям
+Используем Role-Based Access Control.
+Роли:
+ADMIN
+INVESTOR
+APPLICANT
+________________________________________
+Пример доступа
+Только ADMIN
+POST /users
+DELETE /users/{id}
+________________________________________
+INVESTOR
+POST /projects/{id}/approve
+POST /projects/{id}/reject
+________________________________________
+APPLICANT
+POST /projects
+PUT /projects/{id}
+________________________________________
+7. Где проверяются роли
+Есть два уровня:
+уровень 1 — Gateway
+проверяет:
+есть ли токен
+________________________________________
+уровень 2 — микросервисы
+проверяют:
+доступ по ролям
+Например:
+@PreAuthorize("hasRole('ADMIN')")
+________________________________________
+8. Структура пакетов безопасности
+USER SERVICE
+security
+│
+├── JwtService
+├── JwtTokenProvider
+├── JwtAuthenticationFilter
+└── SecurityConfig
+________________________________________
+JwtService
+генерирует токен.
+________________________________________
+JwtAuthenticationFilter
+читает токен из:
+Authorization header
+________________________________________
+SecurityConfig
+настраивает:
+•	фильтры
+•	правила доступа
+________________________________________
+9. Gateway безопасность
+В Gateway есть фильтр:
+JwtAuthFilter
+Он:
+1.	берет токен
+2.	проверяет подпись
+3.	проверяет срок
+Если всё нормально → проксирует запрос.
+________________________________________
+10. Защита endpoints
+Пример:
+Project Controller
+@PreAuthorize("hasAnyRole('ADMIN','APPLICANT')")
+@PostMapping("/projects")
+________________________________________
+Approve Project
+@PreAuthorize("hasRole('INVESTOR')")
+@PostMapping("/projects/{id}/approve")
+________________________________________
+11. Хеширование паролей
+Используем:
+BCryptPasswordEncoder
+Пример:
+passwordEncoder.encode(password)
+________________________________________
+12. Защита от основных атак
+Используем:
+1️⃣ HTTPS
+________________________________________
+2️⃣ CORS
+на Gateway.
+________________________________________
+3️⃣ CSRF
+для REST API отключается.
+csrf.disable()
+________________________________________
+4️⃣ rate limit (опционально)
+ограничение запросов.
+________________________________________
+13. Refresh Token (опционально)
+Можно добавить:
+access token
+refresh token
+Но для диплома достаточно:
+JWT access token
+________________________________________
+14. Поток запроса
+Frontend
+   |
+   | JWT
+   |
+Gateway
+   |
+   | проверка токена
+   |
+Project Service
+   |
+Spring Security
+   |
+Controller
+________________________________________
+15. Таблицы безопасности
+users
+id
+login
+password_hash
+email
+is_active
+created_at
+________________________________________
+roles
+id
+name
+description
+________________________________________
+user_roles
+id
+user_id
+role_id
+________________________________________
+16. Почему эта архитектура правильная
+Она:
+✔ используется в микросервисах
+✔ масштабируется
+✔ безопасна
+✔ понятна на защите
+✔ реализуется стандартными средствами Spring Security
+________________________________________
+17. Следующий важный шаг
+Теперь можно перейти к началу разработки.
+Лучше начать с:
+1️⃣ User Service
+Потому что он содержит:
+•	безопасность
+•	пользователей
+•	JWT
+После него остальные сервисы писать проще.
+________________________________________
+Если хочешь, дальше я покажу:
+идеальную структуру User Service (Entity + Repository + Service + Security)
+и мы сразу начнем писать код правильно, чтобы потом ничего не переделывать.
+Начнем разработку с User Service, потому что он является ядром безопасности всей системы. Если его правильно построить, остальные сервисы будут делаться намного проще.
+Я покажу правильную production-подобную структуру:
+1.	структура проекта
+2.	зависимости
+3.	сущности (Entity)
+4.	репозитории
+5.	DTO
+6.	сервисы
+7.	безопасность (JWT)
+8.	контроллеры
+Все это — готовый каркас сервиса.
+________________________________________
+1. Структура проекта User Service
+user-service
+│
+├── src/main/java
+│
+└── com.investment.userservice
+    │
+    ├── config
+    │
+    ├── controller
+    │
+    ├── service
+    │
+    ├── repository
+    │
+    ├── entity
+    │
+    ├── dto
+    │
+    ├── mapper
+    │
+    ├── security
+    │
+    ├── exception
+    │
+    └── UserServiceApplication
+________________________________________
+2. Maven зависимости
+Основные зависимости:
+<dependencies>
+
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+<dependency>
+<groupId>org.postgresql</groupId>
+<artifactId>postgresql</artifactId>
+</dependency>
+
+<dependency>
+<groupId>io.jsonwebtoken</groupId>
+<artifactId>jjwt-api</artifactId>
+</dependency>
+
+<dependency>
+<groupId>io.jsonwebtoken</groupId>
+<artifactId>jjwt-impl</artifactId>
+</dependency>
+
+<dependency>
+<groupId>io.jsonwebtoken</groupId>
+<artifactId>jjwt-jackson</artifactId>
+</dependency>
+
+<dependency>
+<groupId>org.projectlombok</groupId>
+<artifactId>lombok</artifactId>
+</dependency>
+
+</dependencies>
+________________________________________
+3. Entity слой
+User
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+public class User {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    private String login;
+
+    private String passwordHash;
+
+    private String email;
+
+    private boolean isActive;
+
+    private LocalDateTime createdAt;
+
+}
+________________________________________
+Role
+@Entity
+@Table(name = "roles")
+@Getter
+@Setter
+public class Role {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    private String name;
+
+}
+________________________________________
+UserRole
+@Entity
+@Table(name = "user_roles")
+@Getter
+@Setter
+public class UserRole {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    private UUID userId;
+
+    private UUID roleId;
+
+}
+________________________________________
+4. Repository слой
+Используем Spring Data JPA.
+________________________________________
+UserRepository
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
+
+    Optional<User> findByLogin(String login);
+
+}
+________________________________________
+RoleRepository
+@Repository
+public interface RoleRepository extends JpaRepository<Role, UUID> {
+
+    Optional<Role> findByName(String name);
+
+}
+________________________________________
+UserRoleRepository
+@Repository
+public interface UserRoleRepository extends JpaRepository<UserRole, UUID> {
+
+    List<UserRole> findByUserId(UUID userId);
+
+}
+________________________________________
+5. DTO
+DTO используются для обмена данными между клиентом и сервером.
+________________________________________
+LoginRequest
+@Data
+public class LoginRequest {
+
+    private String login;
+    private String password;
+
+}
+________________________________________
+LoginResponse
+@Data
+@AllArgsConstructor
+public class LoginResponse {
+
+    private String token;
+
+}
+________________________________________
+UserDto
+@Data
+public class UserDto {
+
+    private UUID id;
+
+    private String login;
+
+    private String email;
+
+}
+________________________________________
+6. Service слой
+________________________________________
+AuthService
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+
+    public String login(LoginRequest request){
+
+        User user = userRepository
+                .findByLogin(request.getLogin())
+                .orElseThrow();
+
+        if(!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPasswordHash()
+        )){
+            throw new RuntimeException("Invalid password");
+        }
+
+        return jwtService.generateToken(user);
+    }
+
+}
+________________________________________
+7. JWT сервис
+JwtService
+@Service
+public class JwtService {
+
+    private final String SECRET = "very_secret_key";
+
+    public String generateToken(User user){
+
+        return Jwts.builder()
+                .setSubject(user.getLogin())
+                .claim("userId", user.getId())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(
+                        System.currentTimeMillis() + 86400000
+                ))
+                .signWith(SignatureAlgorithm.HS256, SECRET)
+                .compact();
+    }
+
+}
+________________________________________
+8. SecurityConfig
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+@Bean
+public PasswordEncoder passwordEncoder(){
+    return new BCryptPasswordEncoder();
+}
+
+@Bean
+public SecurityFilterChain filterChain(
+        HttpSecurity http
+) throws Exception {
+
+    http
+        .csrf().disable()
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/**").permitAll()
+            .anyRequest().authenticated()
+        );
+
+    return http.build();
+}
+
+}
+________________________________________
+9. Контроллер
+AuthController
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/login")
+    public LoginResponse login(
+            @RequestBody LoginRequest request
+    ){
+
+        String token = authService.login(request);
+
+        return new LoginResponse(token);
+    }
+
+}
+________________________________________
+10. application.yml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/investment
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+________________________________________
+11. API User Service
+Авторизация
+POST /auth/login
+________________________________________
+Получить пользователя
+GET /users/{id}
+________________________________________
+Создать пользователя
+POST /users
+________________________________________
+12. Что мы получили
+Это уже рабочий каркас микросервиса:
+✔ Spring Boot
+✔ PostgreSQL
+✔ JWT
+✔ Spring Security
+✔ JPA
+

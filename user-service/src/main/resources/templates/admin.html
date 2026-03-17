@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - User Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 1100px; margin: auto; }
+        h2, h3 { margin-top: 24px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .row { display: flex; gap: 24px; flex-wrap: wrap; }
+        .card { border: 1px solid #ddd; padding: 16px; border-radius: 6px; flex: 1; min-width: 280px; }
+        input, select { width: 100%; padding: 8px; margin: 6px 0; }
+        button { padding: 8px 12px; }
+        .error { color: red; }
+        .success { color: green; }
+        .actions form { display: inline-block; margin-right: 6px; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="topbar">
+        <h2>Admin Panel</h2>
+        <form action="/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <div th:if="${success}" class="success" th:text="${success}"></div>
+    <div th:if="${tempPassword}" class="success" th:text="${tempPassword}"></div>
+
+    <div class="row">
+        <div class="card">
+            <h3>Create User</h3>
+            <form action="/admin/users" method="post">
+                <input type="text" name="login" placeholder="Login" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password (min 8)" required>
+                <label>Role (optional)</label>
+                <select name="role">
+                    <option value="">—</option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="INVESTOR">INVESTOR</option>
+                    <option value="APPLICANT">APPLICANT</option>
+                </select>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Assign Role</h3>
+            <form action="/admin/users/assign-role" method="post">
+                <input type="text" name="userId" placeholder="User ID" required>
+                <select name="role" required>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="INVESTOR">INVESTOR</option>
+                    <option value="APPLICANT">APPLICANT</option>
+                </select>
+                <button type="submit">Assign</button>
+            </form>
+        </div>
+    </div>
+
+    <h3>Users</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Active</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.roles}"></td>
+            <td th:text="${user.active}"></td>
+            <td th:text="${user.createdAt}"></td>
+            <td class="actions">
+                <form th:action="@{'/admin/users/' + ${user.id} + '/block'}" method="post">
+                    <button type="submit">Block</button>
+                </form>
+                <form th:action="@{'/admin/users/' + ${user.id} + '/unblock'}" method="post">
+                    <button type="submit">Unblock</button>
+                </form>
+                <form th:action="@{'/admin/users/' + ${user.id} + '/reset-password'}" method="post">
+                    <button type="submit">Reset Password</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+.nsi-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nsi-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    overflow: hidden;
+}
+
+.tab-button {
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--dark-gray);
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    color: var(--secondary-color);
+    background: var(--light-gray);
+}
+
+.tab-button.active {
+    color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+    background: white;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.nsi-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.formulas-tree {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.tree-category {
+    margin-bottom: 1.5rem;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.category-icon {
+    font-size: 1.2rem;
+}
+
+.category-header h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.formulas-list {
+    padding-left: 1rem;
+}
+
+.formula-item {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.formula-header {
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.formula-header:hover {
+    background: var(--light-gray);
+}
+
+.formula-header h4 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.formula-content {
+    padding: 1rem;
+    background: white;
+}
+
+.formula-expression {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.formula-description {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.formula-description p {
+    margin-bottom: 0.5rem;
+}
+
+.calculations-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.calculation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    background: white;
+    transition: var(--transition);
+}
+
+.calculation-item:hover {
+    box-shadow: var(--box-shadow);
+}
+
+.calculation-info h3 {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.calculation-date {
+    font-size: 0.8rem;
+    color: var(--dark-gray);
+}
+
+.calculation-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-edit, .btn-delete, .btn-copy {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: white;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.btn-edit {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-edit:hover {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-delete {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.btn-delete:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-copy {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-copy:hover {
+    background: var(--success-color);
+    color: white;
+}
+
+@media (max-width: 1024px) {
+    .nsi-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .calculation-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .calculation-actions {
+        align-self: flex-end;
+    }
+}
+
+/* Заголовок карточки с поиском и кнопкой */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h2 {
+    flex-shrink: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.search-input {
+    flex: 1 1 250px;
+    min-width: 200px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.card-header .btn-primary {
+    flex-shrink: 0;
+}
+
+/* Единый стиль для всех элементов справочников */
+.formula-item,
+.list-item {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    background: white;
+    overflow: hidden;
+}
+
+/* Заголовок элемента */
+.formula-header,
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.formula-header:hover,
+.item-header:hover {
+    background: var(--light-gray);
+}
+
+.formula-header h4,
+.item-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+/* Кнопки действий */
+.item-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-edit-item,
+.btn-delete-item {
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.btn-edit-item {
+    background-color: var(--secondary-color);
+}
+
+.btn-delete-item {
+    background-color: var(--accent-color);
+}
+
+.btn-edit-item:hover {
+    background-color: #2980B9;
+}
+
+.btn-delete-item:hover {
+    background-color: #c0392b;
+}
+
+/* Содержимое элемента */
+.formula-content,
+.item-description {
+    padding: 1rem;
+    background: white;
+}
+
+/* Формулы */
+.formula-expression {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.formula-description,
+.item-description  {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.formula-description p {
+    margin-bottom: 0.5rem;
+}
+
+/* Диапазоны */
+.range-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.range-table th,
+.range-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.range-table th {
+    background-color: var(--light-gray);
+    font-weight: 600;
+}
+
+.range-description {
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Пользователи */
+.user-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.user-fields .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-fields .field-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.2rem;
+}
+
+/* Цвета для статусов */
+.status-podan {
+    --status-color: #e3f2fd; /* светло-голубой */
+}
+.status-na-rassmotrenii {
+    --status-color: #fff3e0; /* светло-оранжевый */
+}
+.status-odobren {
+    --status-color: #e8f5e9; /* светло-зелёный */
+}
+.status-na-dorabotke {
+    --status-color: #ffecb3; /* светло-жёлтый */
+}
+.status-otklonen {
+    --status-color: #ffebee; /* светло-красный */
+}
+.status-aktiven {
+    --status-color: #e0f2f1; /* светло-бирюзовый */
+}
+.status-zavershen {
+    --status-color: #e8eaf6; /* светло-сиреневый */
+}
+
+/* Стилизация статусов */
+.status-item .item-description {
+    background-color: var(--status-color);
+    transition: background-color 0.3s ease;
+}
+
+.status-item .item-header {
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+.status-item .item-header:hover {
+    background-color: var(--status-color);
+}
+
+.status-item .item-header:hover + .item-description {
+    background-color: white;
+}
+
+/* Убираем ограничения высоты для прокрутки всей страницы */
+.formulas-tree,
+.items-list {
+    max-height: none;
+    overflow-y: visible;
+}
+
