@@ -47,28 +47,198 @@
             <div id="current" class="tab-pane active">
                 <div class="projects-controls">
                     <div class="search-box">
-                        <input type="text" id="projectSearch" placeholder="Поиск по названию проекта...">
+                        <input type="text" class="project-search" data-tab="current" placeholder="Поиск по названию проекта...">
                         <span class="search-icon">🔍</span>
                     </div>
                     <div class="filters">
-                        <select id="directionFilter">
-                            <option value="">Все направления</option>
-                            <option value="IT">IT</option>
-                            <option value="Производство">Производство</option>
-                            <option value="Логистика">Логистика</option>
-                        </select>
-                        <select id="departmentFilter">
-                            <option value="">Все подразделения</option>
-                            <option value="Департамент развития">Департамент развития</option>
-                            <option value="Филиал Восток">Филиал Восток</option>
-                            <option value="Центральный офис">Центральный офис</option>
-                        </select>
-                        <select id="sortSelect">
-                            <option value="rank-desc">Ранг (по убыванию)</option>
-                            <option value="rank-asc">Ранг (по возрастанию)</option>
-                            <option value="date">Дата создания</option>
-                            <option value="name">Название (А-Я)</option>
-                        </select>
+                        <!-- Направление -->
+                        <div class="filter-group">
+                            <span>Направление</span>
+                            <div class="dropdown-checkbox" data-filter="direction" data-tab="current">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все направления</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="IT" checked>
+                                        <span class="checkmark"></span>IT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Производство" checked>
+                                        <span class="checkmark"></span>Производство
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Логистика" checked>
+                                        <span class="checkmark"></span>Логистика
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Подразделение -->
+                        <div class="filter-group">
+                            <span>Подразделение</span>
+                            <div class="dropdown-checkbox" data-filter="department" data-tab="current">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все подразделения</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Департамент развития" checked>
+                                        <span class="checkmark"></span>Департамент развития
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Филиал Восток" checked>
+                                        <span class="checkmark"></span>Филиал Восток
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Центральный офис" checked>
+                                        <span class="checkmark"></span>Центральный офис
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Категория -->
+                        <div class="filter-group">
+                            <span>Категория</span>
+                            <div class="dropdown-checkbox" data-filter="category" data-tab="current">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все категории</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Стратегический" checked>
+                                        <span class="checkmark"></span>Стратегический
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инфраструктурный" checked>
+                                        <span class="checkmark"></span>Инфраструктурный
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инновационный" checked>
+                                        <span class="checkmark"></span>Инновационный
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Статус (только для текущих) -->
+                        <div class="filter-group">
+                            <span>Статус</span>
+                            <div class="dropdown-checkbox" data-filter="status" data-tab="current">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все статусы</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Активный" checked>
+                                        <span class="checkmark"></span>Активный
+                                    </label>
+                                    <!-- Завершённых нет в текущих, но оставим для возможности -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Сортировка -->
+                        <div class="filter-group">
+                            <span>Сортировка*</span>
+                            <select class="filter-select" data-tab="current">
+                                <option value="rank-desc">Ранг (по убыванию)</option>
+                                <option value="rank-asc">Ранг (по возрастанию)</option>
+                                <option value="date">Дата создания</option>
+                                <option value="name">Название (А-Я)</option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>
+                <div class="projects-list">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Название проекта</th>
+                                <th>Категория</th>
+                                <th>Ранг</th>
+                                <th>Направление</th>
+                                <th>Структурное подразделение</th>
+                                <th>Статус</th>
+                                <th>Дата изменения</th>
+                            </tr>
+                        </thead>
+                        <tbody id="current-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Вкладка Черновики -->
+            <div id="drafts" class="tab-pane">
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <input type="text" class="project-search" data-tab="drafts" placeholder="Поиск по названию проекта...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filters">
+                        <!-- Направление -->
+                        <div class="filter-group">
+                            <span>Направление</span>
+                            <div class="dropdown-checkbox" data-filter="direction" data-tab="drafts">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все направления</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="IT" checked>
+                                        <span class="checkmark"></span>IT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Производство" checked>
+                                        <span class="checkmark"></span>Производство
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Логистика" checked>
+                                        <span class="checkmark"></span>Логистика
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Подразделение -->
+                        <div class="filter-group">
+                            <span>Подразделение</span>
+                            <div class="dropdown-checkbox" data-filter="department" data-tab="drafts">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все подразделения</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Департамент развития" checked>
+                                        <span class="checkmark"></span>Департамент развития
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Филиал Восток" checked>
+                                        <span class="checkmark"></span>Филиал Восток
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Центральный офис" checked>
+                                        <span class="checkmark"></span>Центральный офис
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Категория -->
+                        <div class="filter-group">
+                            <span>Категория</span>
+                            <div class="dropdown-checkbox" data-filter="category" data-tab="drafts">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все категории</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Стратегический" checked>
+                                        <span class="checkmark"></span>Стратегический
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инфраструктурный" checked>
+                                        <span class="checkmark"></span>Инфраструктурный
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инновационный" checked>
+                                        <span class="checkmark"></span>Инновационный
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Сортировка -->
+                        <div class="filter-group">
+                            <span>Сортировка*</span>
+                            <select class="filter-select" data-tab="drafts">
+                                <option value="rank-desc">Ранг (по убыванию)</option>
+                                <option value="rank-asc">Ранг (по возрастанию)</option>
+                                <option value="date">Дата создания</option>
+                                <option value="name">Название (А-Я)</option>
+                            </select>
+                        </div>  
                     </div>
                 </div>
 
@@ -77,6 +247,7 @@
                         <thead>
                             <tr>
                                 <th>Название проекта</th>
+                                <th>Категория</th>
                                 <th>Ранг</th>
                                 <th>Направление</th>
                                 <th>Структурное подразделение</th>
@@ -84,46 +255,116 @@
                                 <th>Дата изменения</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="project-row" data-project-id="1">
-                                <td class="project-name">Развитие IT-инфраструктуры</td>
-                                <td class="project-rank">85</td>
-                                <td class="project-direction">IT</td>
-                                <td class="project-department">Департамент развития</td>
-                                <td class="project-status"><span class="status-badge status-active">Активный</span></td>
-                                <td class="project-date">2024-01-20</td>
-                            </tr>
-                            <tr class="project-row" data-project-id="2">
-                                <td class="project-name">Строительство цеха №2</td>
-                                <td class="project-rank">78</td>
-                                <td class="project-direction">Производство</td>
-                                <td class="project-department">Филиал Восток</td>
-                                <td class="project-status"><span class="status-badge status-active">Активный</span></td>
-                                <td class="project-date">2024-01-18</td>
-                            </tr>
-                            <tr class="project-row" data-project-id="3">
-                                <td class="project-name">Закупка оборудования</td>
-                                <td class="project-rank">92</td>
-                                <td class="project-direction">Логистика</td>
-                                <td class="project-department">Центральный офис</td>
-                                <td class="project-status"><span class="status-badge status-completed">Завершен</span></td>
-                                <td class="project-date">2024-01-15</td>
-                            </tr>
+                        <tbody id="drafts-table-body">
+                            <!-- Данные черновиков -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Вкладка Черновики -->
-            <div id="drafts" class="tab-pane">
-                Черновики
-            </div>
-
             <!-- Вкладка Архив проектов -->
             <div id="archive" class="tab-pane">
-                Архив
-            </div>
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <input type="text" class="project-search" data-tab="archive" placeholder="Поиск по названию проекта...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filters">
+                        <!-- Направление -->
+                        <div class="filter-group">
+                            <span>Направление</span>
+                            <div class="dropdown-checkbox" data-filter="direction" data-tab="archive">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все направления</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="IT" checked>
+                                        <span class="checkmark"></span>IT
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Производство" checked>
+                                        <span class="checkmark"></span>Производство
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Логистика" checked>
+                                        <span class="checkmark"></span>Логистика
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Подразделение -->
+                        <div class="filter-group">
+                            <span>Подразделение</span>
+                            <div class="dropdown-checkbox" data-filter="department" data-tab="archive">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все подразделения</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Департамент развития" checked>
+                                        <span class="checkmark"></span>Департамент развития
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Филиал Восток" checked>
+                                        <span class="checkmark"></span>Филиал Восток
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Центральный офис" checked>
+                                        <span class="checkmark"></span>Центральный офис
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Категория -->
+                        <div class="filter-group">
+                            <span>Категория</span>
+                            <div class="dropdown-checkbox" data-filter="category" data-tab="archive">
+                                <button class="dropdown-trigger btn-secondary" type="button">Все категории</button>
+                                <div class="dropdown-menu">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Стратегический" checked>
+                                        <span class="checkmark"></span>Стратегический
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инфраструктурный" checked>
+                                        <span class="checkmark"></span>Инфраструктурный
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" value="Инновационный" checked>
+                                        <span class="checkmark"></span>Инновационный
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Сортировка -->
+                        <div class="filter-group">
+                            <span>Сортировка*</span>
+                            <select class="filter-select" data-tab="archive">
+                                <option value="rank-desc">Ранг (по убыванию)</option>
+                                <option value="rank-asc">Ранг (по возрастанию)</option>
+                                <option value="date">Дата создания</option>
+                                <option value="name">Название (А-Я)</option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>
 
+                <div class="projects-list">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Название проекта</th>
+                                <th>Категория</th>
+                                <th>Ранг</th>
+                                <th>Направление</th>
+                                <th>Структурное подразделение</th>
+                                <th>Статус</th>
+                                <th>Дата изменения</th>
+                            </tr>
+                        </thead>
+                        <tbody id="archive-table-body">
+                            <!-- Данные архива -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
     </main>
