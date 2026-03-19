@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Проект "Развитие IT-инфраструктуры" - Управление инвестиционными проектами</title>
+    <title>Проект - Управление инвестиционными проектами</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/project-detail.css">
 </head>
@@ -30,24 +30,28 @@
 
     <main class="main-content">
         <div class="project-detail-container">
+            <!-- Шапка проекта -->
             <div class="project-header">
                 <div class="project-title">
-                    <h1>Проект: "Развитие IT-инфраструктуры"</h1>
+                    <h1 id="projectTitle">Проект: <span id="projectName">Развитие IT-инфраструктуры</span></h1>
                     <div class="project-meta">
-                        <span>Ранг: 85</span>
+                        <span>Ранг: <span id="projectRank">0</span></span>
+                        <span>Статус: <span id="projectStatus">Активный</span></span>
                     </div>
                 </div>
                 <div class="project-actions">
                     <button class="btn-secondary" id="backToListBtn">← Назад к списку</button>
-                    <button class="btn-primary" id="saveProjectBtn">Сохранить изменения</button>
+                    <button class="btn-primary" id="saveProjectBtn" data-visible="true">Сохранить изменения</button>
+                    <button class="btn-primary" id="publishProjectBtn" style="display: none;">Опубликовать</button>
                 </div>
             </div>
             
+            <!-- Вкладки -->
             <div class="project-tabs">
                 <button class="tab-button active" data-tab="teo">ТЭО</button>
                 <button class="tab-button" data-tab="card">Карточка проекта</button>
                 <button class="tab-button" data-tab="ranking">Характеристики ранжирования</button>
-                <button class="tab-button" data-tab="coments">Комментарии</button>
+                <button class="tab-button" data-tab="comments" id="commentsTabBtn">Комментарии</button>
             </div>
             
             <div class="tab-content">
@@ -55,62 +59,46 @@
                 <div id="teo" class="tab-pane active">
                     <div class="teo-header">
                         <h2>Технико-экономическое обоснование</h2>
-                        <button class="btn-primary" id="addIndicatorBtn">+ Добавить показатель</button>
+                        <!-- Кнопка добавления показателей удалена -->
                     </div>
                     
                     <div class="teo-sections">
+                        <!-- 1. Резюме -->
                         <div class="teo-section">
-                            <h3>📊 Финансовые показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="npv">NPV (Чистая приведенная стоимость), руб.</label>
-                                        <input type="number" id="npv" value="15800000">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="irr">IRR (Внутренняя норма доходности), %</label>
-                                        <input type="number" id="irr" value="18.5" step="0.1">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="paybackPeriod">Срок окупаемости, лет</label>
-                                        <input type="number" id="paybackPeriod" value="3.5" step="0.1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="discountRate">Ставка дисконтирования, %</label>
-                                        <input type="number" id="discountRate" value="12.0" step="0.1">
-                                    </div>
-                                </div>
+                            <h3>Резюме</h3>
+                            <div class="form-group">
+                                <textarea id="teoSummary" rows="5" placeholder="Краткое резюме проекта..."></textarea>
                             </div>
                         </div>
-                        
+                        <!-- 2. Техническое обоснование -->
                         <div class="teo-section">
-                            <h3>🎯 Маркетинговые показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-group">
-                                    <label for="targetMarket">Целевой рынок</label>
-                                    <input type="text" id="targetMarket" value="Корпоративный сегмент">
-                                </div>
-                                <div class="form-group">
-                                    <label for="marketShare">Планируемая доля рынка, %</label>
-                                    <input type="number" id="marketShare" value="15" step="0.1">
-                                </div>
+                            <h3>Техническое обоснование необходимости проекта</h3>
+                            <div class="form-group">
+                                <textarea id="teoTechnical" rows="5" placeholder="Техническое обоснование..."></textarea>
                             </div>
                         </div>
-                        
+                        <!-- 3. Экономическая эффективность -->
                         <div class="teo-section">
-                            <h3>🏭 Производственные показатели</h3>
-                            <div class="teo-form">
-                                <div class="form-group">
-                                    <label for="productionCapacity">Производственная мощность, ед./год</label>
-                                    <input type="number" id="productionCapacity" value="1000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="utilizationRate">Коэффициент использования мощностей, %</label>
-                                    <input type="number" id="utilizationRate" value="85" step="0.1">
-                                </div>
+                            <h3>Определение экономической эффективности проекта</h3>
+                            <div class="form-group">
+                                <textarea id="teoEconomic" rows="5" placeholder="Экономическое обоснование..."></textarea>
                             </div>
+                        </div>
+                        <!-- 4. Показатели ранжирования (таблица) -->
+                        <div class="teo-section">
+                            <h3>Показатели ранжирования</h3>
+                            <table class="indicators-table" id="rankingIndicatorsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Наименование показателя</th>
+                                        <th>Величина</th>
+                                        <th>Единица измерения</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="indicatorsBody">
+                                    <!-- Строки будут добавляться динамически в зависимости от категории -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -119,40 +107,58 @@
                 <div id="card" class="tab-pane">
                     <h2>📋 Карточка проекта</h2>
                     <div class="project-card-form">
-                        <div class="form-column">
+                        <div class="form-row">
                             <div class="form-group">
-                                <label for="projectDescription">Краткое описание</label>
-                                <textarea id="projectDescription" rows="4">Проект направлен на модернизацию IT-инфраструктуры компании с целью повышения производительности и безопасности.</textarea>
+                                <label for="cardName">Название проекта</label>
+                                <input type="text" id="cardName" value="">
                             </div>
                             <div class="form-group">
-                                <label for="projectManager">Менеджер проекта</label>
-                                <input type="text" id="projectManager" value="Петров И.С.">
-                            </div>
-                            <div class="form-group">
-                                <label for="startDate">Дата начала</label>
-                                <input type="date" id="startDate" value="2024-02-01">
-                            </div>
-                            <div class="form-group">
-                                <label for="endDate">Дата окончания (план)</label>
-                                <input type="date" id="endDate" value="2024-12-31">
+                                <label for="cardDirection">Направление</label>
+                                <select id="cardDirection">
+                                    <option value="IT">IT</option>
+                                    <option value="Производство">Производство</option>
+                                    <option value="Логистика">Логистика</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-column">
-                            <div class="form-group readonly">
-                                <label for="importedNPV">NPV (из ТЭО)</label>
-                                <input type="text" id="importedNPV" value="15 800 000 руб." readonly>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardGoal">Цель проекта</label>
+                                <textarea id="cardGoal" rows="3"></textarea>
                             </div>
-                            <div class="form-group readonly">
-                                <label for="importedIRR">IRR (из ТЭО)</label>
-                                <input type="text" id="importedIRR" value="18.5%" readonly>
-                            </div>
-                            <div class="form-group readonly">
-                                <label for="importedPayback">Срок окупаемости (из ТЭО)</label>
-                                <input type="text" id="importedPayback" value="3.5 лет" readonly>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardCost">Стоимость проекта, руб.</label>
+                                <input type="text" id="cardCost" readonly class="readonly-field" value="0">
                             </div>
                             <div class="form-group">
-                                <label for="projectBudget">Бюджет проекта, руб.</label>
-                                <input type="number" id="projectBudget" value="50000000">
+                                <label for="cardPayback">Срок окупаемости, лет</label>
+                                <input type="text" id="cardPayback" readonly class="readonly-field" value="0">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardStartDate">Дата начала</label>
+                                <input type="date" id="cardStartDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardEndDate">Дата окончания (план)</label>
+                                <input type="date" id="cardEndDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardManager">Менеджер проекта (Ответственный)</label>
+                                <input type="text" id="cardManager" value="Иванов А.В.">
+                            </div>
+                            <div class="form-group" id="cardStatusGroup">
+                                <label for="cardStatus">Статус</label>
+                                <select id="cardStatus">
+                                    <option value="Активный">Активный</option>
+                                    <option value="Завершен">Завершен</option>
+                                    <option value="Черновик">Черновик</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -161,46 +167,27 @@
                 <!-- Вкладка Характеристики ранжирования -->
                 <div id="ranking" class="tab-pane">
                     <h2>🏆 Характеристики ранжирования</h2>
-                    <p class="ranking-info">Данные для расчета импортируются из раздела ТЭО</p>
+                    <p class="ranking-info">Баллы рассчитываются автоматически на основе введённых величин.</p>
                     
                     <div class="ranking-table-container">
                         <table class="ranking-table">
                             <thead>
                                 <tr>
-                                    <th>Характеристика</th>
+                                    <th>Показатель</th>
                                     <th>Значение (из ТЭО)</th>
-                                    <th>Присвоенный балл</th>
+                                    <th>Балл</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>NPV проекта</td>
-                                    <td>15 800 000 руб.</td>
-                                    <td class="ranking-score">3</td>
-                                </tr>
-                                <tr>
-                                    <td>IRR проекта</td>
-                                    <td>18.5%</td>
-                                    <td class="ranking-score">3</td>
-                                </tr>
-                                <tr>
-                                    <td>Срок окупаемости</td>
-                                    <td>3.5 лет</td>
-                                    <td class="ranking-score">2</td>
-                                </tr>
-                                <tr>
-                                    <td>Риск проекта</td>
-                                    <td>Средний</td>
-                                    <td class="ranking-score">2</td>
-                                </tr>
+                            <tbody id="rankingScoresBody">
+                                <!-- будут заполнены из показателей -->
                             </tbody>
                         </table>
                     </div>
                     
                     <div class="ranking-summary">
                         <div class="total-score">
-                            <h3>Итоговая оценка (ранг)</h3>
-                            <div class="score-value">85 / 100</div>
+                            <h3>Итоговый ранг</h3>
+                            <div class="score-value" id="totalRank">0</div>
                         </div>
                         <div class="ranking-chart">
                             <canvas id="rankingChart"></canvas>
@@ -208,9 +195,15 @@
                     </div>
                 </div>
 
-                <!-- Вкладка Комментарии -->
-                <div id="coments" class="tab-pane">
-                    <h2>Комментарии</h2>    
+                <!-- Вкладка Комментарии (скрыта для черновиков) -->
+                <div id="comments" class="tab-pane">
+                    <div class="comments-header">
+                        <h2>Комментарии</h2>
+                        <button class="btn-primary" id="addCommentBtn">+ Добавить комментарий</button>
+                    </div>
+                    <div class="comments-list" id="commentsList">
+                        <!-- Список комментариев -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -222,6 +215,26 @@
             <p>Контакты: <a href="mailto:support@company.ru">support@company.ru</a> | Версия 2.1.4</p>
         </div>
     </footer>
+
+    <!-- Модальное окно для комментария -->
+    <div class="modal-overlay" id="commentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Добавить комментарий</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="commentText">Комментарий</label>
+                    <textarea id="commentText" rows="4" placeholder="Введите текст комментария..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary cancel-btn">Отмена</button>
+                <button class="btn-primary save-btn" id="saveCommentBtn">Сохранить</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/project-detail.js"></script>
