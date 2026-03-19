@@ -1,3 +1,5 @@
+/* nsi.css */
+
 .nsi-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -49,195 +51,15 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.nsi-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.formulas-tree {
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.tree-category {
+/* Карточки и списки */
+.section-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-.category-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: var(--light-gray);
-    border-radius: var(--border-radius);
-}
-
-.category-icon {
-    font-size: 1.2rem;
-}
-
-.category-header h3 {
-    color: var(--primary-color);
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.formulas-list {
-    padding-left: 1rem;
-}
-
-.formula-item {
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-}
-
-.formula-header {
-    padding: 1rem;
-    background: white;
-    border-bottom: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.formula-header:hover {
-    background: var(--light-gray);
-}
-
-.formula-header h4 {
-    margin: 0;
-    color: var(--text-color);
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.formula-content {
-    padding: 1rem;
-    background: white;
-}
-
-.formula-expression {
-    font-family: 'Courier New', monospace;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background: var(--light-gray);
-    border-radius: var(--border-radius);
-    text-align: center;
-}
-
-.formula-description {
-    font-size: 0.9rem;
-    color: var(--dark-gray);
-}
-
-.formula-description p {
-    margin-bottom: 0.5rem;
-}
-
-.calculations-list {
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.calculation-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
-    background: white;
-    transition: var(--transition);
-}
-
-.calculation-item:hover {
-    box-shadow: var(--box-shadow);
-}
-
-.calculation-info h3 {
-    margin: 0 0 0.25rem 0;
-    color: var(--text-color);
-    font-size: 1rem;
-}
-
-.calculation-date {
-    font-size: 0.8rem;
-    color: var(--dark-gray);
-}
-
-.calculation-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.btn-edit, .btn-delete, .btn-copy {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background: white;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.btn-edit {
-    color: var(--secondary-color);
-    border-color: var(--secondary-color);
-}
-
-.btn-edit:hover {
-    background: var(--secondary-color);
-    color: white;
-}
-
-.btn-delete {
-    color: var(--accent-color);
-    border-color: var(--accent-color);
-}
-
-.btn-delete:hover {
-    background: var(--accent-color);
-    color: white;
-}
-
-.btn-copy {
-    color: var(--success-color);
-    border-color: var(--success-color);
-}
-
-.btn-copy:hover {
-    background: var(--success-color);
-    color: white;
-}
-
-@media (max-width: 1024px) {
-    .nsi-layout {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .calculation-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .calculation-actions {
-        align-self: flex-end;
-    }
-}
-
-/* Заголовок карточки с поиском и кнопкой */
 .card-header {
     display: flex;
     align-items: center;
@@ -272,12 +94,7 @@
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
-.card-header .btn-primary {
-    flex-shrink: 0;
-}
-
-/* Единый стиль для всех элементов справочников */
-.formula-item,
+/* Элементы справочников */
 .list-item {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -286,8 +103,6 @@
     overflow: hidden;
 }
 
-/* Заголовок элемента */
-.formula-header,
 .item-header {
     display: flex;
     justify-content: space-between;
@@ -296,28 +111,27 @@
     background: white;
     border-bottom: 1px solid var(--border-color);
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
-.formula-header:hover,
 .item-header:hover {
     background: var(--light-gray);
 }
 
-.formula-header h4,
 .item-header h4 {
     margin: 0;
     font-size: 1rem;
     color: var(--primary-color);
 }
 
-/* Кнопки действий */
 .item-actions {
     display: flex;
     gap: 0.5rem;
 }
 
 .btn-edit-item,
-.btn-delete-item {
+.btn-delete-item,
+.btn-lock-item {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
@@ -325,6 +139,10 @@
     border-radius: var(--border-radius);
     transition: background-color 0.3s ease;
     color: white;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-edit-item {
@@ -335,6 +153,10 @@
     background-color: var(--accent-color);
 }
 
+.btn-lock-item {
+    background-color: var(--warning-color);
+}
+
 .btn-edit-item:hover {
     background-color: #2980B9;
 }
@@ -343,11 +165,18 @@
     background-color: #c0392b;
 }
 
-/* Содержимое элемента */
-.formula-content,
-.item-description {
+.btn-lock-item:hover {
+    background-color: #e67e22;
+}
+
+.item-content {
+    display: none;
     padding: 1rem;
     background: white;
+}
+
+.list-item.open .item-content {
+    display: block;
 }
 
 /* Формулы */
@@ -363,14 +192,9 @@
     text-align: center;
 }
 
-.formula-description,
-.item-description  {
+.item-description {
     font-size: 0.9rem;
     color: var(--dark-gray);
-}
-
-.formula-description p {
-    margin-bottom: 0.5rem;
 }
 
 /* Диапазоны */
@@ -392,76 +216,164 @@
     font-weight: 600;
 }
 
-.range-description {
-    color: var(--dark-gray);
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-}
-
 /* Пользователи */
 .user-fields {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;                /* отступы между элементами (и справа, и снизу) */
+    font-size: 0.9rem;
 }
 
 .user-fields .field {
+    flex: 0 0 auto;            /* ширина по содержимому, не растягивается */
     display: flex;
     flex-direction: column;
+    line-height: 1.3;
+    min-width: 120px;          /* минимальная ширина для аккуратности (можно убрать) */
 }
 
 .user-fields .field-label {
     font-weight: 600;
     color: var(--primary-color);
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.1rem;
+    font-size: 0.8rem;
 }
 
-/* Цвета для статусов */
-.status-podan {
-    --status-color: #e3f2fd; /* светло-голубой */
+/* Цвета статусов */
+.status-chernovik .item-content {
+    background-color: #d0d0d0;
 }
-.status-na-rassmotrenii {
-    --status-color: #fff3e0; /* светло-оранжевый */
-}
-.status-odobren {
-    --status-color: #e8f5e9; /* светло-зелёный */
-}
-.status-na-dorabotke {
-    --status-color: #ffecb3; /* светло-жёлтый */
-}
-.status-otklonen {
-    --status-color: #ffebee; /* светло-красный */
-}
-.status-aktiven {
-    --status-color: #e0f2f1; /* светло-бирюзовый */
-}
-.status-zavershen {
-    --status-color: #e8eaf6; /* светло-сиреневый */
+.status-chernovik .item-header:hover {
+    background-color: #d0d0d0;
 }
 
-/* Стилизация статусов */
-.status-item .item-description {
-    background-color: var(--status-color);
-    transition: background-color 0.3s ease;
+.status-podan .item-content { background-color: #e3f2fd; }
+.status-na-rassmotrenii .item-content { background-color: #fff3e0; }
+.status-odobren .item-content { background-color: #e8f5e9; }
+.status-na-dorabotke .item-content { background-color: #ffecb3; }
+.status-otklonen .item-content { background-color: #ffebee; }
+.status-aktiven .item-content { background-color: #e0f2f1; }
+.status-zavershen .item-content { background-color: #e8eaf6; }
+
+/* Модальные окна */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
 }
 
-.status-item .item-header {
-    background-color: white;
-    transition: background-color 0.3s ease;
+.modal {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: auto;
+    animation: slideUp 0.3s ease;
 }
 
-.status-item .item-header:hover {
-    background-color: var(--status-color);
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.status-item .item-header:hover + .item-description {
-    background-color: white;
+.modal-header h3 {
+    margin: 0;
+    color: var(--primary-color);
 }
 
-/* Убираем ограничения высоты для прокрутки всей страницы */
-.formulas-tree,
-.items-list {
-    max-height: none;
-    overflow-y: visible;
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--dark-gray);
 }
 
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Строки диапазонов в модальном окне */
+.range-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.range-row input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.range-row .btn-delete-row {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.range-row .btn-delete-row:hover {
+    background-color: #c0392b;
+}
+
+#add-range-row {
+    margin-top: 0.5rem;
+}
+
+.hint {
+    color: var(--dark-gray);
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-input {
+        width: auto;
+    }
+    .user-fields {
+        grid-template-columns: 1fr;
+    }
+}

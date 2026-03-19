@@ -25,93 +25,62 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Раскрытие/скрытие формул (клик по заголовку, игнорируя кнопки)
-    const formulaHeaders = document.querySelectorAll('.formula-header');
-    formulaHeaders.forEach(header => {
-        header.addEventListener('click', function (e) {
-            // Если клик по кнопке внутри заголовка – не раскрываем
-            if (e.target.closest('.item-actions')) return;
+    // ========== Сворачивание/разворачивание элементов ==========
+    // Функция инициализации: все свёрнуты
+    function initCollapse() {
+        document.querySelectorAll('.list-item .item-content').forEach(content => {
+            content.style.display = 'none';
+        });
+    }
 
-            const content = this.nextElementSibling;
-            const isVisible = content.style.display === 'block';
+    // Обработчик клика по заголовку (исключая кнопки действий)
+    document.addEventListener('click', function (e) {
+        const header = e.target.closest('.item-header');
+        if (!header) return;
+        if (e.target.closest('.item-actions')) return;
 
-            // Закрываем все открытые формулы
-            document.querySelectorAll('.formula-content').forEach(item => {
-                item.style.display = 'none';
+        const item = header.closest('.list-item');
+        if (!item) return;
+
+        const content = item.querySelector('.item-content');
+        if (content) {
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                item.classList.remove('open');
+            } else {
+                content.style.display = 'block';
+                item.classList.add('open');
+            }
+        }
+    });
+
+    // ========== Поиск по названию ==========
+    const searchInputs = document.querySelectorAll('.search-input');
+
+    searchInputs.forEach(input => {
+        input.addEventListener('input', function () {
+            const tabId = this.dataset.tab; // formuls, directions, ...
+            const searchTerm = this.value.toLowerCase().trim();
+            const container = document.getElementById(`${tabId}-list`);
+            if (!container) return;
+
+            const items = container.querySelectorAll('.list-item');
+            items.forEach(item => {
+                const title = item.querySelector('h4')?.textContent.toLowerCase() || '';
+                if (title.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
             });
-
-            // Открываем/закрываем текущую формулу
-            content.style.display = isVisible ? 'none' : 'block';
         });
     });
 
-    // По умолчанию открываем первую формулу
-    const firstFormula = document.querySelector('.formula-content');
-    if (firstFormula) {
-        firstFormula.style.display = 'block';
-    }
-
-    // Раскрытие/скрытие описания в подвкладках (клик по заголовку, игнорируя кнопки)
-    const itemHeaders = document.querySelectorAll('.item-header');
-    itemHeaders.forEach(header => {
-        header.addEventListener('click', function (e) {
-            // Если клик по кнопке внутри заголовка – не раскрываем
-            if (e.target.closest('.item-actions')) return;
-
-            const content = this.nextElementSibling;
-            const isVisible = content.style.display === 'block';
-
-            // Закрываем все открытые элементы
-            document.querySelectorAll('.item-description').forEach(item => {
-                item.style.display = 'none';
-            });
-
-            // Открываем/закрываем текущий элемент
-            content.style.display = isVisible ? 'none' : 'block';
-        });
-    });
-
-    // По умолчанию открываем первое описание
-    const firstItem = document.querySelector('.item-description');
-    if (firstItem) {
-        firstItem.style.display = 'block';
-    }
-
-    // Функция показа уведомлений
-    function showNotification(message, type) {
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) existingNotification.remove();
-
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.textContent = message;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: var(--border-radius);
-            color: white;
-            font-weight: 500;
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            background-color: ${type === 'error' ? 'var(--accent-color)' : type === 'success' ? 'var(--success-color)' : 'var(--secondary-color)'};
-        `;
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-
-    // Модальное окно для добавления/редактирования
+    // ========== Модальные окна ==========
     function showItemModal(type, itemData = null) {
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
 
-        // Генерация полей в зависимости от типа (сокращённо, для примера)
         let fieldsHtml = '';
         if (type === 'formula') {
             fieldsHtml = `
@@ -126,13 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="form-group">
                     <label for="itemDescription">Описание</label>
                     <textarea id="itemDescription" rows="3" placeholder="Опишите формулу">${itemData?.description || ''}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="formulaCategory">Категория</label>
-                    <select id="formulaCategory">
-                        <option value="finance" ${itemData?.category === 'finance' ? 'selected' : ''}>Финансы</option>
-                        <option value="production" ${itemData?.category === 'production' ? 'selected' : ''}>Производство</option>
-                    </select>
                 </div>
             `;
         } else if (type === 'direction' || type === 'status' || type === 'division' || type === 'category') {
@@ -150,38 +112,48 @@ document.addEventListener('DOMContentLoaded', function () {
             fieldsHtml = `
                 <div class="form-group">
                     <label for="itemName">Название характеристики</label>
-                    <input type="text" id="itemName" value="${itemData?.name || ''}" placeholder="Например: Ранг проекта">
+                    <input type="text" id="itemName" value="${itemData?.name || ''}" placeholder="Например: Бюджет">
                 </div>
                 <div class="form-group">
-                    <label for="rangeMin">Минимальное значение</label>
-                    <input type="number" id="rangeMin" value="${itemData?.min || ''}" step="any">
-                </div>
-                <div class="form-group">
-                    <label for="rangeMax">Максимальное значение</label>
-                    <input type="number" id="rangeMax" value="${itemData?.max || ''}" step="any">
-                </div>
-                <div class="form-group">
-                    <label for="itemDescription">Описание</label>
-                    <textarea id="itemDescription" rows="3" placeholder="Описание диапазона">${itemData?.description || ''}</textarea>
+                    <label>Диапазоны и баллы</label>
+                    <div id="ranges-container">
+                        <div class="range-row">
+                            <input type="number" class="range-min" placeholder="Мин" step="any">
+                            <input type="number" class="range-max" placeholder="Макс" step="any">
+                            <input type="number" class="range-score" placeholder="Балл" step="1" min="1">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-secondary" id="add-range-row">+ Добавить диапазон</button>
                 </div>
             `;
         } else if (type === 'user') {
             fieldsHtml = `
                 <div class="form-group">
+                    <label for="userFullName">ФИО</label>
+                    <input type="text" id="userFullName" value="${itemData?.fullName || ''}" placeholder="Иванов Иван Иванович">
+                </div>
+                <div class="form-group">
                     <label for="userLogin">Логин</label>
                     <input type="text" id="userLogin" value="${itemData?.login || ''}" placeholder="Логин">
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" value="${itemData?.email || ''}" placeholder="email@example.com">
                 </div>
                 <div class="form-group">
                     <label for="userPassword">Пароль</label>
                     <input type="password" id="userPassword" value="${itemData?.password || ''}" placeholder="Пароль">
                 </div>
                 <div class="form-group">
-                    <label for="userFullName">ФИО</label>
-                    <input type="text" id="userFullName" value="${itemData?.fullName || ''}" placeholder="Иванов Иван Иванович">
-                </div>
-                <div class="form-group">
                     <label for="userDepartment">Подразделение</label>
-                    <input type="text" id="userDepartment" value="${itemData?.department || ''}" placeholder="Отдел разработки">
+                    <select id="userDepartment">
+                        <option value="НОД-1" ${itemData?.department === 'НОД-1' ? 'selected' : ''}>НОД-1 (Минское отделение)</option>
+                        <option value="НОД-2" ${itemData?.department === 'НОД-2' ? 'selected' : ''}>НОД-2 (Барановичское отделение)</option>
+                        <option value="НОД-3" ${itemData?.department === 'НОД-3' ? 'selected' : ''}>НОД-3 (Брестское отделение)</option>
+                        <option value="НОД-4" ${itemData?.department === 'НОД-4' ? 'selected' : ''}>НОД-4 (Гомельское отделение)</option>
+                        <option value="НОД-5" ${itemData?.department === 'НОД-5' ? 'selected' : ''}>НОД-5 (Могилёвское отделение)</option>
+                        <option value="НОД-6" ${itemData?.department === 'НОД-6' ? 'selected' : ''}>НОД-6 (Витебское отделение)</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="userRole">Роль</label>
@@ -212,6 +184,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.body.appendChild(modal);
 
+        // Обработчики для диапазонов (если это range)
+        if (type === 'range') {
+            const addRangeBtn = modal.querySelector('#add-range-row');
+            const container = modal.querySelector('#ranges-container');
+
+            addRangeBtn.addEventListener('click', function () {
+                const newRow = document.createElement('div');
+                newRow.className = 'range-row';
+                newRow.innerHTML = `
+                    <input type="number" class="range-min" placeholder="Мин" step="any">
+                    <input type="number" class="range-max" placeholder="Макс" step="any">
+                    <input type="number" class="range-score" placeholder="Балл" step="1" min="1">
+                    <button type="button" class="btn-delete-row" title="Удалить">✖</button>
+                `;
+                container.appendChild(newRow);
+                newRow.querySelector('.btn-delete-row').addEventListener('click', function () {
+                    newRow.remove();
+                });
+            });
+        }
+
         const closeBtn = modal.querySelector('.close-modal');
         const cancelBtn = modal.querySelector('.cancel-btn');
         const saveBtn = modal.querySelector('.save-btn');
@@ -225,8 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelBtn.addEventListener('click', closeModal);
 
         saveBtn.addEventListener('click', function () {
-            // Здесь должна быть логика сохранения (отправка на сервер или обновление DOM)
-            // Для демонстрации просто показываем уведомление
+            // Здесь логика сохранения (можно собрать данные)
             showNotification(`${itemData ? 'Обновлено' : 'Добавлено'}`, 'success');
             closeModal();
         });
@@ -245,43 +237,58 @@ document.addEventListener('DOMContentLoaded', function () {
         return names[type] || 'элемента';
     }
 
-    // Обработчики для кнопок добавления (с data-type)
+    // Кнопки добавления
     document.querySelectorAll('.add-item-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
+        btn.addEventListener('click', function () {
             const type = this.getAttribute('data-type');
             showItemModal(type);
         });
     });
 
-    // Делегирование событий для кнопок редактирования и удаления
+    // Делегирование для кнопок редактирования, удаления, блокировки
     document.addEventListener('click', function (e) {
         // Редактирование
         if (e.target.closest('.btn-edit-item')) {
             const btn = e.target.closest('.btn-edit-item');
-            const item = btn.closest('[data-id]');
+            const item = btn.closest('.list-item');
             if (!item) return;
 
-            // Определяем тип по активной вкладке
             const activePane = document.querySelector('.tab-pane.active');
             const type = mapTabIdToType(activePane?.id);
-
-            // Здесь можно получить данные элемента из DOM
-            // Для примера вызываем модалку с заглушкой
-            showItemModal(type, { name: 'Пример' });
+            const name = item.querySelector('h4')?.textContent || '';
+            showItemModal(type, { name: name });
         }
 
         // Удаление
         if (e.target.closest('.btn-delete-item')) {
             const btn = e.target.closest('.btn-delete-item');
-            const item = btn.closest('[data-id]');
+            const item = btn.closest('.list-item');
             if (!item) return;
-
             const name = item.querySelector('h4')?.textContent || 'элемент';
             if (confirm(`Удалить "${name}"?`)) {
                 item.style.animation = 'slideOut 0.3s ease forwards';
                 setTimeout(() => item.remove(), 300);
                 showNotification(`Элемент удалён`, 'success');
             }
+        }
+
+        // Блокировка/разблокировка пользователя
+        if (e.target.closest('.btn-lock-item')) {
+            const btn = e.target.closest('.btn-lock-item');
+            const item = btn.closest('.list-item');
+            if (!item) return;
+
+            item.classList.toggle('locked');
+            if (item.classList.contains('locked')) {
+                btn.textContent = '🔓';
+                btn.title = 'Разблокировать';
+            } else {
+                btn.textContent = '🔒';
+                btn.title = 'Заблокировать';
+            }
+            const userName = item.querySelector('h4')?.textContent || 'Пользователь';
+            const action = item.classList.contains('locked') ? 'заблокирован' : 'разблокирован';
+            showNotification(`${userName} ${action}`, 'info');
         }
     });
 
@@ -298,79 +305,34 @@ document.addEventListener('DOMContentLoaded', function () {
         return map[tabId] || 'formula';
     }
 
-    // Добавляем стили для анимаций, если их нет
-    if (!document.querySelector('#modal-styles')) {
-        const style = document.createElement('style');
-        style.id = 'modal-styles';
-        style.textContent = `
-            .modal-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                animation: fadeIn 0.3s ease;
-            }
-            .modal {
-                background: white;
-                border-radius: var(--border-radius);
-                box-shadow: var(--box-shadow);
-                width: 90%;
-                max-width: 500px;
-                max-height: 90vh;
-                overflow: auto;
-                animation: slideUp 0.3s ease;
-            }
-            .modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1.5rem;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .modal-header h3 {
-                margin: 0;
-                color: var(--primary-color);
-            }
-            .close-modal {
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-                color: var(--dark-gray);
-            }
-            .modal-body {
-                padding: 1.5rem;
-            }
-            .modal-footer {
-                padding: 1.5rem;
-                border-top: 1px solid var(--border-color);
-                display: flex;
-                justify-content: flex-end;
-                gap: 1rem;
-            }
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            @keyframes slideUp {
-                from { transform: translateY(50px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; }
-                to { opacity: 0; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
+    // Уведомления
+    function showNotification(message, type) {
+        const existing = document.querySelector('.notification');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            background-color: ${type === 'error' ? 'var(--accent-color)' : type === 'success' ? 'var(--success-color)' : 'var(--secondary-color)'};
         `;
-        document.head.appendChild(style);
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
     }
+
+    // Инициализация сворачивания
+    initCollapse();
 });
